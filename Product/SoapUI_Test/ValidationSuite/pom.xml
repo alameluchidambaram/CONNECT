@@ -315,7 +315,7 @@
                                             </fileset>
                                         </copy>
 
-                                        <copy file="${project.build.directory}/nhinc-properites-dir/smtp.agent.config.template.xml" tofile="${project.build.directory}/nhinc-properites-dir/smtp.agent.config.xml" filtering="yes" overwrite="yes">
+                                        <copy file="${project.build.directory}/nhinc-properites-dir/smtp.agent.config.xml" tofile="${project.build.directory}/nhinc-properites-dir/smtp.agent.config.xml" filtering="yes" overwrite="yes">
                                             <filterset>
                                                 <filter token="ANCHOR_STORE_JKS" value="${project.build.directory}/domain1/config/${direct.anchor.store}.jks" />
                                                 <filter token="PUBLIC_STORE_JKS" value="${project.build.directory}/domain1/config/${direct.trust.store}.jks" />
