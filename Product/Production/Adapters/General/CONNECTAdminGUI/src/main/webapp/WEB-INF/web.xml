@@ -25,13 +25,13 @@
     </context-param>
 
     <context-param>
-        <param-name>org.apache.myfaces.EXPRESSION_FACTORY</param-name>
-        <param-value>com.sun.el.ExpressionFactoryImpl</param-value>
+        <param-name>org.apache.myfaces.SERIALIZE_STATE_IN_SESSION</param-name>
+        <param-value>false</param-value>
     </context-param>
 
     <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>WEB-INF/applicationContext.xml</param-value>
+        <param-name>org.apache.myfaces.EXPRESSION_FACTORY</param-name>
+        <param-value>com.sun.el.ExpressionFactoryImpl</param-value>
     </context-param>
 
     <!-- Welcome page -->
