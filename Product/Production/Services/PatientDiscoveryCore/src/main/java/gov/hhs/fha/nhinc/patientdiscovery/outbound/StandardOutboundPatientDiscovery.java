@@ -128,9 +128,7 @@ public class StandardOutboundPatientDiscovery implements OutboundPatientDiscover
             } else if (request.getPRPAIN201305UV02() == null) {
                 throw new Exception("PatientDiscovery PRPAIN201305UV02 request was null.");
             } else {
-                auditRequestFromAdapter(request, assertion);
                 response = getResponseFromCommunities(request, assertion);
-                auditResponseToAdapter(response, assertion);
             }
         } catch (Exception e) {
             LOG.error("Exception occurred while getting responses", e);
@@ -138,6 +136,7 @@ public class StandardOutboundPatientDiscovery implements OutboundPatientDiscover
             // generate error message and add to response
             addErrorMessageToResponse(request, response, e);
         }
+        auditRequestFromAdapter(request, assertion);
         LOG.debug("End respondingGatewayPRPAIN201305UV02");
         return response;
     }
@@ -413,19 +412,7 @@ public class StandardOutboundPatientDiscovery implements OutboundPatientDiscover
         NhinTargetSystemType targetSystem = MessageGeneratorUtils.getInstance()
             .convertFirstToNhinTargetSystemType(request.getNhinTargetCommunities());
         patientDiscoveryAuditor.auditRequestMessage(request.getPRPAIN201305UV02(), assertion, targetSystem,
-            NhincConstants.AUDIT_LOG_INBOUND_DIRECTION, NhincConstants.AUDIT_LOG_ENTITY_INTERFACE, Boolean.TRUE,
+            NhincConstants.AUDIT_LOG_INBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.TRUE,
             null, NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME);
-    }
-
-    private void auditResponseToAdapter(RespondingGatewayPRPAIN201306UV02ResponseType response,
-        AssertionType assertion) {
-
-        for (CommunityPRPAIN201306UV02ResponseType responseEntry : response.getCommunityResponse()) {
-            patientDiscoveryAuditor.auditResponseMessage(responseEntry.getPRPAIN201306UV02(), assertion,
-                MessageGeneratorUtils.getInstance().convertToNhinTargetSystemType(
-                    responseEntry.getNhinTargetCommunity()), NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION,
-                NhincConstants.AUDIT_LOG_ENTITY_INTERFACE, Boolean.TRUE, null,
-                NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME);
-        }
     }
 }

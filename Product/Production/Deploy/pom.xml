@@ -46,7 +46,6 @@
             <version>${project.parent.version}</version>
             <type>war</type>
         </dependency>
-
         <dependency>
             <groupId>org.connectopensource</groupId>
             <artifactId>CONNECTCommonWeb</artifactId>
@@ -87,7 +86,7 @@
         </dependency>
 
         <!-- The following dependencies have been historically included with CONNECT,
-             but their use cannot be identified with the maven dependency plugin -->
+        but their use cannot be identified with the maven dependency plugin -->
         <dependency>
             <groupId>net.jcip</groupId>
             <artifactId>jcip-annotations</artifactId>
@@ -103,6 +102,12 @@
         <dependency>
             <groupId>ca.juliusdavies</groupId>
             <artifactId>not-yet-commons-ssl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.connectopensource</groupId>
+            <artifactId>CONNECTEJBCore</artifactId>
+            <version>${project.parent.version}</version>
+            <type>ejb</type>
         </dependency>
     </dependencies>
 
@@ -130,6 +135,10 @@
                             <artifactId>CONNECTAdapterWeb</artifactId>
                             <contextRoot>/CONNECTAdapter</contextRoot>
                         </webModule>
+                        <ejbModule>
+                            <groupId>org.connectopensource</groupId>
+                            <artifactId>CONNECTEJBCore</artifactId>
+                        </ejbModule>
                     </modules>
                     <version>6</version>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
@@ -561,7 +570,6 @@
                     <version>${project.parent.version}</version>
                     <type>war</type>
                 </dependency>
-
                 <dependency>
                     <groupId>org.connectopensource</groupId>
                     <artifactId>CORE_X12DocumentSubmission_10</artifactId>

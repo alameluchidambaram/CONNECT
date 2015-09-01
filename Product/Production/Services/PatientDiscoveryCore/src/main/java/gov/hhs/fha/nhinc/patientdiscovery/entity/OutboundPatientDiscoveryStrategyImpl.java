@@ -61,9 +61,6 @@ public class OutboundPatientDiscoveryStrategyImpl extends OutboundPatientDiscove
 
     public void executeStrategy(OutboundPatientDiscoveryOrchestratable message) {
         LOG.debug("begin executeStrategy");
-        patientDiscoveryAuditor.auditRequestMessage(message.getRequest(), message.getAssertion(),
-            message.getTarget(), NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE,
-            Boolean.TRUE, null, NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME);
 
         try {
             NhinPatientDiscoveryProxy proxy = new NhinPatientDiscoveryProxyObjectFactory()
@@ -85,9 +82,6 @@ public class OutboundPatientDiscoveryStrategyImpl extends OutboundPatientDiscove
             message.setResponse(response);
             LOG.debug("executeStrategy returning error response");
         }
-        patientDiscoveryAuditor.auditResponseMessage(message.getResponse(), message.getAssertion(),
-            message.getTarget(), NhincConstants.AUDIT_LOG_INBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE,
-            Boolean.TRUE, null, NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME);
 
     }
 

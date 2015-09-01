@@ -70,10 +70,9 @@ public class StandardInboundPatientDiscovery extends AbstractInboundPatientDisco
     @InboundProcessingEvent(beforeBuilder = PRPAIN201305UV02EventDescriptionBuilder.class, afterReturningBuilder = PRPAIN201306UV02EventDescriptionBuilder.class, serviceType = "Patient Discovery", version = "1.0")
     public PRPAIN201306UV02 respondingGatewayPRPAIN201305UV02(PRPAIN201305UV02 body, AssertionType assertion, Properties webContextProperties)
         throws PatientDiscoveryException {
-        auditRequestFromNhin(body, assertion, webContextProperties);
 
         PRPAIN201306UV02 response = process(body, assertion, webContextProperties);
-
+        
         auditResponseToNhin(response, assertion, webContextProperties);
 
         return response;
@@ -81,11 +80,8 @@ public class StandardInboundPatientDiscovery extends AbstractInboundPatientDisco
 
     @Override
     PRPAIN201306UV02 process(PRPAIN201305UV02 body, AssertionType assertion, Properties webContextProperties) throws PatientDiscoveryException {
-        auditRequestToAdapter(body, assertion, webContextProperties);
 
         PRPAIN201306UV02 response = patientDiscoveryProcessor.process201305(body, assertion);
-
-        auditResponseFromAdapter(response, assertion, webContextProperties);
 
         return response;
     }

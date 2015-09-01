@@ -32,6 +32,7 @@
         <module>CORE_X12DocumentSubmissionCore</module>
         <module>DocumentRetrieveCore</module>
         <module>AdminDistributionCore</module>
+        <module>CONNECTEJBCore</module>
     </modules>
 
     <profiles>

@@ -27,15 +27,12 @@
 package gov.hhs.fha.nhinc.audit;
 
 import gov.hhs.fha.nhinc.audit.transform.AuditTransforms;
-import gov.hhs.fha.nhinc.auditrepository.nhinc.proxy.AuditRepositoryProxyObjectFactory;
-import gov.hhs.fha.nhinc.common.auditlog.LogEventRequestType;
 import gov.hhs.fha.nhinc.common.nhinccommon.AssertionType;
 import gov.hhs.fha.nhinc.common.nhinccommon.NhinTargetSystemType;
 import java.util.Properties;
-import org.apache.log4j.Logger;
 
 /**
- * ATNA-compliant audit logger template class. Each individual service logger will implement this class, but provide its
+ * ATNA-compliant audit logger abstract class. Each individual service logger will implement this class, but provide its
  * own implementation.
  *
  * @author achidamb, cmay
@@ -43,8 +40,6 @@ import org.apache.log4j.Logger;
  * @param <K>
  */
 public abstract class AuditLogger<T, K> {
-
-    private static final Logger LOG = Logger.getLogger(AuditLogger.class);
 
     /**
      * ATNA-compliant logging for a request message of type T
@@ -60,18 +55,12 @@ public abstract class AuditLogger<T, K> {
      * @param webContextProperties Properties loaded from message context
      * @param serviceName Name of the Service being audited
      */
-    public void auditRequestMessage(T request, AssertionType assertion, NhinTargetSystemType target, String direction,
-        String _interface, Boolean isRequesting, Properties webContextProperties, String serviceName) {
-
-        LOG.trace("--- Before auditing of request message ---");
-        LogEventRequestType auditLogMsg = getAuditTransforms().transformRequestToAuditMsg(request, assertion, target,
-            direction, _interface, isRequesting, webContextProperties, serviceName);
-        auditLogMessages(auditLogMsg, assertion);
-        LOG.trace("--- After auditing of request message ---");
-    }
-
-    /**
-     * ATNA-compliant logging for a response message of type K
+    public abstract void auditRequestMessage(T request, AssertionType assertion, NhinTargetSystemType target, String direction,
+        String _interface, Boolean isRequesting, Properties webContextProperties, String serviceName);
+    
+    
+     /**
+     * ATNA-compliant logging for a request message of type T
      * <P>
      * TODO: This method should be final, but cannot due to the way PD inbound JUnit tests have been written.
      *
@@ -80,27 +69,12 @@ public abstract class AuditLogger<T, K> {
      * @param target target community
      * @param direction defines the Outbound/Inbound message
      * @param _interface Entity, Adapter or Nwhin
-     * @param isRequesting true/false identifies initiator/responder
+     * @param isRequesting true for initiator, false for responder
      * @param webContextProperties Properties loaded from message context
      * @param serviceName Name of the Service being audited
      */
-    public void auditResponseMessage(K response, AssertionType assertion, NhinTargetSystemType target, String direction,
-        String _interface, Boolean isRequesting, Properties webContextProperties, String serviceName) {
-
-        LOG.trace("--- Before auditing of response message ---");
-        LogEventRequestType auditLogMsg = getAuditTransforms().transformResponseToAuditMsg(response, assertion,
-            target, direction, _interface, isRequesting, webContextProperties, serviceName);
-        auditLogMessages(auditLogMsg, assertion);
-        LOG.trace("--- After auditing of response message ---");
-    }
-
-    private void auditLogMessages(LogEventRequestType auditLogMsg, AssertionType assertion) {
-        if (auditLogMsg != null && auditLogMsg.getAuditMessage() != null) {
-            new AuditRepositoryProxyObjectFactory().getAuditRepositoryProxy().auditLog(auditLogMsg, assertion);
-        } else {
-            LOG.error("auditLogMsg is null, no auditing will take place.");
-        }
-    }
+        public abstract void auditResponseMessage(K response, AssertionType assertion, NhinTargetSystemType target, String direction,
+        String _interface, Boolean isRequesting, Properties webContextProperties, String serviceName);
 
     /**
      * Returns the AuditTransforms implementation needed for auditing the current service.
