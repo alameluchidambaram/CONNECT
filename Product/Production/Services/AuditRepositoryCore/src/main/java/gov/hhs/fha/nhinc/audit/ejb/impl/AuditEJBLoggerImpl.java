@@ -33,8 +33,12 @@ import gov.hhs.fha.nhinc.common.auditlog.LogEventRequestType;
 import gov.hhs.fha.nhinc.common.nhinccommon.AssertionType;
 import gov.hhs.fha.nhinc.common.nhinccommon.NhinTargetSystemType;
 import java.util.Properties;
+import javax.annotation.Resource;
 import javax.ejb.Asynchronous;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import org.apache.log4j.Logger;
 
 /**
@@ -44,9 +48,13 @@ import org.apache.log4j.Logger;
  * @param <K> Response
  */
 @Stateless
+@TransactionManagement(TransactionManagementType.CONTAINER)
 public class AuditEJBLoggerImpl<T, K> implements AuditEJBLogger<T, K> {
 
     private static final Logger LOG = Logger.getLogger(AuditEJBLoggerImpl.class);
+
+    @Resource
+    SessionContext ctx;
 
     /**
      * EJB Asynchronous call to handle AuditRepository client
