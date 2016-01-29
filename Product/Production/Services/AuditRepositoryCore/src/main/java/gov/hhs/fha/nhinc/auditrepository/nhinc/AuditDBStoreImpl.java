@@ -85,6 +85,8 @@ public class AuditDBStoreImpl implements AuditStore {
         auditRec.setMessageId(mess.getRequestMessageId());
         auditRec.setRelatesTo(mess.getRelatesTo());
         auditRec.setUserId(mess.getUserId());
+        auditRec.setStatus(mess.getStatus());
+        auditRec.setReason(mess.getReason());
 
         return auditRec;
     }

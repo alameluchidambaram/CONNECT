@@ -176,7 +176,8 @@ public class StandardOutboundDocSubmissionDeferredRequest implements OutboundDoc
     private void auditRequest(ProvideAndRegisterDocumentSetRequestType request, AssertionType assertion,
         NhinTargetSystemType target) {
         auditLogger.auditRequestMessage(request, assertion, target, NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION,
-            NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.TRUE, null, NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME);
+            NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.TRUE, null, NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME,
+            0, null);
     }
 
     private HomeCommunityType getNhinTargetHomeCommunity(

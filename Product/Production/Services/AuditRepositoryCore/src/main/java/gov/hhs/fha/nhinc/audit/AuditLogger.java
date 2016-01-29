@@ -64,13 +64,16 @@ public abstract class AuditLogger<T, K> {
      * @param isRequesting true for initiator, false for responder
      * @param webContextProperties Properties loaded from message context
      * @param serviceName Name of the Service being audited
+     * @param outcome outcome field indicates the success/failure of transaction
+     * @param exception exception can't send message/cert exception
      */
     public void auditRequestMessage(T request, AssertionType assertion, NhinTargetSystemType target, String direction,
-        String _interface, Boolean isRequesting, Properties webContextProperties, String serviceName) {
+        String _interface, Boolean isRequesting, Properties webContextProperties, String serviceName, Integer outcome,
+        Exception exception) {
         LOG.trace("--- Before auditing of request message ---");
         if (isAuditLoggingOn(serviceName) && getAuditLogger() != null) {
             getAuditLogger().auditRequestMessage(request, assertion, target, direction, _interface, isRequesting,
-                webContextProperties, serviceName, getAuditTransforms());
+                webContextProperties, serviceName, getAuditTransforms(), outcome, exception);
         }
         LOG.trace("--- After auditing of request message ---");
     }
@@ -89,15 +92,17 @@ public abstract class AuditLogger<T, K> {
      * @param isRequesting true/false identifies initiator/responder
      * @param webContextProperties Properties loaded from message context
      * @param serviceName Name of the Service being audited
+     * @param outcome Reflects the transaction success/failure
+     * @param exception exception can't send message/cert exception
      */
     public void auditResponseMessage(T request, K response, AssertionType assertion, NhinTargetSystemType target,
         String direction, String _interface, Boolean isRequesting, Properties webContextProperties,
-        String serviceName) {
+        String serviceName, Integer outcome, Exception exception) {
 
         LOG.trace("--- Before auditing of response message ---");
         if (isAuditLoggingOn(serviceName) && getAuditLogger() != null) {
             getAuditLogger().auditResponseMessage(request, response, assertion, target, direction, _interface,
-                isRequesting, webContextProperties, serviceName, getAuditTransforms());
+                isRequesting, webContextProperties, serviceName, getAuditTransforms(), outcome, exception);
         }
         LOG.trace("--- After auditing of response message ---");
     }

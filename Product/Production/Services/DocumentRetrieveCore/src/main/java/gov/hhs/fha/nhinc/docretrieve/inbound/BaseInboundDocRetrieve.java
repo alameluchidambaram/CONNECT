@@ -73,8 +73,7 @@ public abstract class BaseInboundDocRetrieve implements InboundDocRetrieve {
         AssertionType assertion, Properties webContextProperties) {
         getAuditLogger().auditResponseMessage(request, response, assertion, null,
             NhincConstants.AUDIT_LOG_INBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE,
-            Boolean.FALSE, webContextProperties,
-            NhincConstants.DOC_RETRIEVE_SERVICE_NAME);
+            Boolean.FALSE, webContextProperties, NhincConstants.DOC_RETRIEVE_SERVICE_NAME, 0, null);
     }
 
     @Override

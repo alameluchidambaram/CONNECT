@@ -73,6 +73,6 @@ public abstract class AbstractInboundPatientDiscoveryDeferredRequest implements 
         Properties webContextProperties) {
         getAuditLogger().auditResponseMessage(req, resp, assertion, null, NhincConstants.AUDIT_LOG_INBOUND_DIRECTION,
             NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.FALSE, webContextProperties,
-            NhincConstants.PATIENT_DISCOVERY_DEFERRED_REQ_SERVICE_NAME);
+            NhincConstants.PATIENT_DISCOVERY_DEFERRED_REQ_SERVICE_NAME, 0, null);
     }
 }

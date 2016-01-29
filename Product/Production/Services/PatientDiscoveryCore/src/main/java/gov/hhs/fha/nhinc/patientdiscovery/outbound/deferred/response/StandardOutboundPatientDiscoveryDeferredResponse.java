@@ -111,7 +111,7 @@ public class StandardOutboundPatientDiscoveryDeferredResponse extends AbstractOu
      */
     @Override
     MCCIIN000002UV01 process(PRPAIN201306UV02 body, AssertionType assertion, NhinTargetCommunitiesType targets) {
-        auditRequest(body, assertion, targets);
+
         MCCIIN000002UV01 ack = new MCCIIN000002UV01();
 
         List<UrlInfo> urlInfoList = getTargetEndpoints(targets);
@@ -132,6 +132,7 @@ public class StandardOutboundPatientDiscoveryDeferredResponse extends AbstractOu
             ack = HL7AckTransforms.createAckErrorFrom201306(body, "No Targets Found");
         }
 
+        auditRequest(body, assertion, targets);
         return ack;
     }
 

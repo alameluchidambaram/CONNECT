@@ -101,11 +101,11 @@ public class StandardInboundDocSubmissionTest {
 
         StandardInboundDocSubmission standardDocSubmission = new StandardInboundDocSubmission(adapterFactory,
             policyChecker, propertyAccessor, getAuditLogger(true)) {
-            @Override
-            public DocSubmissionUtils getDocSubmissionUtils() {
-                return mockDocSubmissionUtils;
-            }
-        };
+                @Override
+                public DocSubmissionUtils getDocSubmissionUtils() {
+                    return mockDocSubmissionUtils;
+                }
+            };
         RegistryResponseType actualResponse = standardDocSubmission.documentRepositoryProvideAndRegisterDocumentSetB(
             request, assertion, webContextProperties);
 
@@ -114,7 +114,8 @@ public class StandardInboundDocSubmissionTest {
         verify(mockEJBLogger).auditResponseMessage(eq(request), eq(actualResponse), eq(assertion),
             isNull(NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.NHINC_XDR_SERVICE_NAME), any(DocSubmissionAuditTransforms.class));
+            eq(NhincConstants.NHINC_XDR_SERVICE_NAME), any(DocSubmissionAuditTransforms.class), any(Integer.class),
+            any(Exception.class));
     }
 
     @Test
@@ -148,7 +149,8 @@ public class StandardInboundDocSubmissionTest {
         verify(mockEJBLogger).auditResponseMessage(eq(request), eq(actualResponse), eq(assertion),
             isNull(NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.NHINC_XDR_SERVICE_NAME), any(DocSubmissionAuditTransforms.class));
+            eq(NhincConstants.NHINC_XDR_SERVICE_NAME), any(DocSubmissionAuditTransforms.class), any(Integer.class),
+            any(Exception.class));
     }
 
     @Test
@@ -172,7 +174,8 @@ public class StandardInboundDocSubmissionTest {
         verify(mockEJBLogger).auditResponseMessage(eq(request), eq(actualResponse), eq(assertion),
             isNull(NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.NHINC_XDR_SERVICE_NAME), any(DocSubmissionAuditTransforms.class));
+            eq(NhincConstants.NHINC_XDR_SERVICE_NAME), any(DocSubmissionAuditTransforms.class), any(Integer.class),
+            any(Exception.class));
     }
 
     @Test
@@ -211,11 +214,11 @@ public class StandardInboundDocSubmissionTest {
 
         StandardInboundDocSubmission standardDocSubmission = new StandardInboundDocSubmission(adapterFactory,
             policyChecker, propertyAccessor, getAuditLogger(false)) {
-            @Override
-            public DocSubmissionUtils getDocSubmissionUtils() {
-                return mockDocSubmissionUtils;
-            }
-        };
+                @Override
+                public DocSubmissionUtils getDocSubmissionUtils() {
+                    return mockDocSubmissionUtils;
+                }
+            };
         RegistryResponseType actualResponse = standardDocSubmission.documentRepositoryProvideAndRegisterDocumentSetB(
             request, assertion, webContextProperties);
 
@@ -224,7 +227,8 @@ public class StandardInboundDocSubmissionTest {
         verify(mockEJBLogger, never()).auditResponseMessage(eq(request), eq(actualResponse), eq(assertion),
             isNull(NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.NHINC_XDR_SERVICE_NAME), any(DocSubmissionAuditTransforms.class));
+            eq(NhincConstants.NHINC_XDR_SERVICE_NAME), any(DocSubmissionAuditTransforms.class), any(Integer.class),
+            any(Exception.class));
     }
 
     private DocSubmissionAuditLogger getAuditLogger(final boolean isAuditOn) {

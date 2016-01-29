@@ -85,7 +85,8 @@ public class PassthroughInboundDocSubmissionTest {
         verify(mockEJBLogger).auditResponseMessage(eq(request), eq(actualResponse), eq(assertion),
             isNull(NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.NHINC_XDR_SERVICE_NAME), any(DocSubmissionAuditTransforms.class));
+            eq(NhincConstants.NHINC_XDR_SERVICE_NAME), any(DocSubmissionAuditTransforms.class), any(Integer.class),
+            any(Exception.class));
     }
 
     @Test
@@ -107,7 +108,8 @@ public class PassthroughInboundDocSubmissionTest {
         verify(mockEJBLogger).auditResponseMessage(eq(request), eq(actualResponse), eq(assertion),
             isNull(NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.NHINC_XDR_SERVICE_NAME), any(DocSubmissionAuditTransforms.class));
+            eq(NhincConstants.NHINC_XDR_SERVICE_NAME), any(DocSubmissionAuditTransforms.class), any(Integer.class),
+            any(Exception.class));
     }
 
     @Test
@@ -131,7 +133,8 @@ public class PassthroughInboundDocSubmissionTest {
         verify(mockEJBLogger, never()).auditResponseMessage(eq(request), eq(actualResponse), eq(assertion),
             isNull(NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.NHINC_XDR_SERVICE_NAME), any(DocSubmissionAuditTransforms.class));
+            eq(NhincConstants.NHINC_XDR_SERVICE_NAME), any(DocSubmissionAuditTransforms.class), any(Integer.class),
+            any(Exception.class));
     }
 
     private DocSubmissionAuditLogger getAuditLogger(final boolean isAuditOn) {

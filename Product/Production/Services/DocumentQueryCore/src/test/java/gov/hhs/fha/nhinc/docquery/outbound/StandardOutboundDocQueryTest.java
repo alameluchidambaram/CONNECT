@@ -107,7 +107,7 @@ public class StandardOutboundDocQueryTest {
         verify(mockEJBLogger, never()).auditRequestMessage(eq(adhocQueryRequest), eq(assertion), eq(target),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.DOC_QUERY_SERVICE_NAME),
-            any(DocQueryAuditTransforms.class));
+            any(DocQueryAuditTransforms.class), any(Integer.class), any(Exception.class));
 
         AdhocQueryResponseAsserter.assertSchemaCompliant(response);
     }
@@ -136,7 +136,7 @@ public class StandardOutboundDocQueryTest {
         verify(mockEJBLogger, never()).auditRequestMessage(eq(adhocQueryRequest), eq(assertion), any(NhinTargetSystemType.class),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.DOC_QUERY_SERVICE_NAME),
-            any(DocQueryAuditTransforms.class));
+            any(DocQueryAuditTransforms.class), any(Integer.class), any(Exception.class));
     }
 
     private AdhocQueryRequest createRequest(List<SlotType1> slotList) {
@@ -243,7 +243,7 @@ public class StandardOutboundDocQueryTest {
         verify(mockEJBLogger, never()).auditRequestMessage(eq(adhocQueryRequest), eq(assertion), eq(target),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.DOC_QUERY_SERVICE_NAME),
-            any(DocQueryAuditTransforms.class));
+            any(DocQueryAuditTransforms.class), any(Integer.class), any(Exception.class));
         assertNotNull(response);
     }
 
@@ -287,7 +287,7 @@ public class StandardOutboundDocQueryTest {
         verify(mockEJBLogger, atLeast(1)).auditRequestMessage(eq(adhocQueryRequest), eq(assertion), eq(target),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.DOC_QUERY_SERVICE_NAME),
-            any(DocQueryAuditTransforms.class));
+            any(DocQueryAuditTransforms.class), any(Integer.class), any(Exception.class));
 
         verify(strategy).execute(any(Aggregate.class));
     }
@@ -327,7 +327,7 @@ public class StandardOutboundDocQueryTest {
         verify(mockEJBLogger, never()).auditRequestMessage(eq(adhocQueryRequest), eq(assertion), eq(target),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.DOC_QUERY_SERVICE_NAME),
-            any(DocQueryAuditTransforms.class));
+            any(DocQueryAuditTransforms.class), any(Integer.class), any(Exception.class));
     }
 
     private DocQueryAuditLogger getAuditLogger(final boolean isLoggingOn) {

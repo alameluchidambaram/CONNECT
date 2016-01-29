@@ -91,7 +91,7 @@ public class PassthroughOutboundDocQueryTest {
         verify(mockEJBLogger).auditRequestMessage(eq(request), eq(assertion), any(NhinTargetSystemType.class),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.DOC_QUERY_SERVICE_NAME),
-            any(DocQueryAuditTransforms.class));
+            any(DocQueryAuditTransforms.class), any(Integer.class), any(Exception.class));
     }
 
     @Test
@@ -152,7 +152,7 @@ public class PassthroughOutboundDocQueryTest {
         verify(mockEJBLogger).auditRequestMessage(eq(request), eq(assertion), any(NhinTargetSystemType.class),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.DOC_QUERY_SERVICE_NAME),
-            any(DocQueryAuditTransforms.class));
+            any(DocQueryAuditTransforms.class), any(Integer.class), any(Exception.class));
     }
 
     @Test
@@ -183,7 +183,7 @@ public class PassthroughOutboundDocQueryTest {
         verify(mockEJBLogger, never()).auditRequestMessage(eq(request), eq(assertion), any(NhinTargetSystemType.class),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.DOC_QUERY_SERVICE_NAME),
-            any(DocQueryAuditTransforms.class));
+            any(DocQueryAuditTransforms.class), any(Integer.class), any(Exception.class));
     }
 
     private DocQueryAuditLogger getAuditLogger(final boolean isLoggingOn) {

@@ -30,8 +30,11 @@ import gov.hhs.fha.nhinc.nhinclib.NhincConstants;
 import gov.hhs.fha.nhinc.nhinclib.NhincConstants.GATEWAY_API_LEVEL;
 import gov.hhs.fha.nhinc.patientdiscovery.nhin.proxy.NhinPatientDiscoveryProxy;
 import gov.hhs.fha.nhinc.patientdiscovery.nhin.proxy.NhinPatientDiscoveryProxyObjectFactory;
+import gov.hhs.fha.nhinc.patientdiscovery.nhin.proxy.NwhinPDResponseWrapper;
 import gov.hhs.fha.nhinc.transform.subdisc.HL7PRPA201306Transforms;
 import gov.hhs.fha.nhinc.webserviceproxy.WebServiceProxyHelper;
+import java.util.ArrayList;
+import java.util.List;
 import org.hl7.v3.PRPAIN201306UV02;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,6 +64,7 @@ public class OutboundPatientDiscoveryStrategyImpl extends OutboundPatientDiscove
     public void executeStrategy(OutboundPatientDiscoveryOrchestratable message) {
         LOG.debug("begin executeStrategy");
         try {
+            List<NwhinPDResponseWrapper> wrapperList = new ArrayList();
             NhinPatientDiscoveryProxy proxy = new NhinPatientDiscoveryProxyObjectFactory()
                 .getNhinPatientDiscoveryProxy();
             String url = (new WebServiceProxyHelper()).getUrlFromTargetSystemByGatewayAPILevel(
@@ -69,8 +73,11 @@ public class OutboundPatientDiscoveryStrategyImpl extends OutboundPatientDiscove
             message.getTarget().setUrl(url);
             LOG.debug("executeStrategy sending nhin patient discovery request to target hcid={} at url={}",
                 message.getTarget().getHomeCommunity().getHomeCommunityId(), url);
-            message.setResponse(proxy.respondingGatewayPRPAIN201305UV02(message.getRequest(), message.getAssertion(),
-                message.getTarget()));
+            NwhinPDResponseWrapper wrapper = proxy.respondingGatewayPRPAIN201305UV02(message.getRequest(), message.getAssertion(),
+                message.getTarget());
+            message.setResponse((PRPAIN201306UV02) wrapper.getResponse());
+            wrapperList.add(wrapper);
+            message.setWrapper(wrapper);
             LOG.debug("executeStrategy returning response");
         } catch (Exception ex) {
             PRPAIN201306UV02 response = new HL7PRPA201306Transforms().createPRPA201306ForErrors(message.getRequest(),

@@ -97,6 +97,8 @@ public class AuditRepositoryProxyWebServiceSecuredImpl implements AuditRepositor
         secureRequest.setUserId(request.getUserId());
         secureRequest.setRelatesTo(request.getRelatesTo());
         secureRequest.setRequestMessageId(request.getRequestMessageId());
+        secureRequest.setStatus(request.getStatus());
+        secureRequest.setReason(request.getReason());
         return secureRequest;
     }
 }

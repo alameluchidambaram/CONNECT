@@ -53,52 +53,79 @@ public class NhinPatientDiscoveryProxyWebServiceSecuredImpl implements NhinPatie
     private static final Logger LOG = LoggerFactory.getLogger(NhinPatientDiscoveryProxyWebServiceSecuredImpl.class);
 
     protected CONNECTClient<RespondingGatewayPortType> getCONNECTSecuredClient(NhinTargetSystemType target,
-            ServicePortDescriptor<RespondingGatewayPortType> portDescriptor, String url, AssertionType assertion) {
+        ServicePortDescriptor<RespondingGatewayPortType> portDescriptor, String url, AssertionType assertion) {
         return CONNECTClientFactory.getInstance().getCONNECTClientSecured(portDescriptor, assertion, url,
-                target.getHomeCommunity().getHomeCommunityId(), NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME);
+            target.getHomeCommunity().getHomeCommunityId(), NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME);
     }
 
     @Override
     @NwhinInvocationEvent(beforeBuilder = PRPAIN201305UV02EventDescriptionBuilder.class, afterReturningBuilder = PRPAIN201306UV02EventDescriptionBuilder.class, serviceType = "Patient Discovery", version = "1.0")
-    public PRPAIN201306UV02 respondingGatewayPRPAIN201305UV02(PRPAIN201305UV02 request, AssertionType assertion,
-            NhinTargetSystemType target) throws Exception {
+    public NwhinPDResponseWrapper respondingGatewayPRPAIN201305UV02(PRPAIN201305UV02 request, AssertionType assertion,
+        NhinTargetSystemType target) throws Exception {
         PRPAIN201306UV02 response = new PRPAIN201306UV02();
+        boolean failureStatus = false;
+        Exception exception = null;
 
         try {
             if (request != null && target != null) {
 
                 LOG.debug("Before target system URL look up.");
+
                 String url = target.getUrl();
                 if (NullChecker.isNullish(url)) {
                     url = ConnectionManagerCache.getInstance().getDefaultEndpointURLByServiceName(
-                            target.getHomeCommunity().getHomeCommunityId(),
-                            NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME);
+                        target.getHomeCommunity().getHomeCommunityId(),
+                        NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME);
                     LOG.debug("After target system URL look up. URL for service: "
-                            + NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME + " is: " + url);
+                        + NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME + " is: " + url);
                 }
 
                 if (NullChecker.isNotNullish(url)) {
                     ServicePortDescriptor<RespondingGatewayPortType> portDescriptor = new RespondingGatewayServicePortDescriptor();
 
                     CONNECTClient<RespondingGatewayPortType> client = getCONNECTSecuredClient(target, portDescriptor,
-                            url, assertion);
+                        url, assertion);
 
                     response = (PRPAIN201306UV02) client.invokePort(RespondingGatewayPortType.class,
-                            "respondingGatewayPRPAIN201305UV02", request);
+                        "respondingGatewayPRPAIN201305UV02", request);
+
                 } else {
                     LOG.error("Failed to call the web service (" + NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME
-                            + ").  The URL is null.");
+                        + ").  The URL is null.");
+                    failureStatus = true;
+
                 }
             } else {
                 LOG.error("Failed to call the web service (" + NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME
-                        + ").  The input parameters are null.");
+                    + ").  The input parameters are null.");
+
+                failureStatus = true;
             }
         } catch (Exception e) {
             LOG.error("Failed to call the web service (" + NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME
-                    + ").  An unexpected exception occurred.  " + "Exception: " + e.getMessage(), e);
-            throw e;
-        }
+                + ").  An unexpected exception occurred.  " + "Exception: " + e.getMessage(), e);
 
-        return response;
+            exception = e;
+            failureStatus = true;
+
+        }
+        NwhinPDResponseWrapper wrapper = buildNwhinResponseWrapper(request, target, assertion, response, exception,
+            failureStatus);
+        return wrapper;
     }
+
+    private NwhinPDResponseWrapper buildNwhinResponseWrapper(PRPAIN201305UV02 request, NhinTargetSystemType target,
+        AssertionType assertion, PRPAIN201306UV02 response, Exception exception, boolean transactionStaus) {
+        NwhinPDResponseWrapper wrapper = new NwhinPDResponseWrapper();
+        wrapper.setAssertion(assertion);
+        wrapper.setTarget(target);
+        if (exception != null) {
+            wrapper.setException(exception);
+        }
+        wrapper.setRequest(request);
+        wrapper.setResponse(response);
+        wrapper.setFailure(transactionStaus);
+        return wrapper;
+    }
+
 }

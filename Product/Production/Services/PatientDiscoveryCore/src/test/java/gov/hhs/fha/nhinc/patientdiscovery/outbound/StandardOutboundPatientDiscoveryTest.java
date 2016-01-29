@@ -26,6 +26,7 @@
  */
 package gov.hhs.fha.nhinc.patientdiscovery.outbound;
 
+import com.google.common.base.Optional;
 import gov.hhs.fha.nhinc.aspect.OutboundProcessingEvent;
 import gov.hhs.fha.nhinc.audit.ejb.AuditEJBLogger;
 import gov.hhs.fha.nhinc.audit.ejb.impl.AuditEJBLoggerImpl;
@@ -35,6 +36,7 @@ import gov.hhs.fha.nhinc.common.nhinccommon.NhinTargetCommunitiesType;
 import gov.hhs.fha.nhinc.common.nhinccommon.NhinTargetCommunityType;
 import gov.hhs.fha.nhinc.common.nhinccommon.NhinTargetSystemType;
 import gov.hhs.fha.nhinc.connectmgr.UrlInfo;
+import gov.hhs.fha.nhinc.gateway.executorservice.NhinCallableRequest;
 import gov.hhs.fha.nhinc.nhinclib.NhincConstants;
 import gov.hhs.fha.nhinc.patientdiscovery.MessageGeneratorUtils;
 import gov.hhs.fha.nhinc.patientdiscovery.PatientDiscoveryPolicyChecker;
@@ -44,6 +46,7 @@ import gov.hhs.fha.nhinc.patientdiscovery.audit.PatientDiscoveryAuditLogger;
 import gov.hhs.fha.nhinc.patientdiscovery.audit.transform.PatientDiscoveryAuditTransforms;
 import gov.hhs.fha.nhinc.patientdiscovery.entity.OutboundPatientDiscoveryDelegate;
 import gov.hhs.fha.nhinc.patientdiscovery.entity.OutboundPatientDiscoveryOrchestratable;
+import gov.hhs.fha.nhinc.patientdiscovery.nhin.proxy.NwhinPDResponseWrapper;
 import gov.hhs.fha.nhinc.policyengine.adapter.proxy.PolicyEngineProxy;
 import gov.hhs.fha.nhinc.policyengine.adapter.proxy.PolicyEngineProxyObjectFactory;
 import java.lang.reflect.Method;
@@ -55,10 +58,25 @@ import org.hl7.v3.PRPAIN201306UV02;
 import org.hl7.v3.RespondingGatewayPRPAIN201305UV02RequestType;
 import org.hl7.v3.RespondingGatewayPRPAIN201306UV02ResponseType;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isNull;
+import static org.mockito.Matchers.isNull;
+import static org.mockito.Matchers.isNull;
+import static org.mockito.Matchers.isNull;
 import static org.mockito.Matchers.isNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -78,6 +96,7 @@ public class StandardOutboundPatientDiscoveryTest {
     private final OutboundPatientDiscoveryOrchestratable mockOrchestratable
         = mock(OutboundPatientDiscoveryOrchestratable.class);
     private final PatientDiscoveryPolicyChecker pdPolicyChecker = mock(PatientDiscoveryPolicyChecker.class);
+    private final NhinCallableRequest nwhinCallable = mock(NhinCallableRequest.class);
 
     @Test
     public void hasOutboundProcessingEvent() throws Exception {
@@ -101,24 +120,32 @@ public class StandardOutboundPatientDiscoveryTest {
         NhinTargetSystemType target = MessageGeneratorUtils.getInstance().convertFirstToNhinTargetSystemType(targets);
         AssertionType assertion = createAssertion();
         request.setAssertion(assertion);
+        Optional optional = mock(Optional.class);
 
         PolicyEngineProxyObjectFactory policyFactory = mock(PolicyEngineProxyObjectFactory.class);
         PolicyEngineProxy policyEngine = mock(PolicyEngineProxy.class);
 
-        when(pdPolicyChecker.checkOutgoingPolicy(any(RespondingGatewayPRPAIN201305UV02RequestType.class))).thenReturn(Boolean.TRUE);
+        when(pdPolicyChecker.checkOutgoingPolicy(any(RespondingGatewayPRPAIN201305UV02RequestType.class))).
+            thenReturn(Boolean.TRUE);
         when(policyFactory.create()).thenReturn(policyEngine);
 
         StandardOutboundPatientDiscovery standardPD = createStandardPDObj(getAuditLogger(true));
         when(mockOrchestratable.getAssertion()).thenReturn(assertion);
         when(mockOrchestratable.getRequest()).thenReturn(request.getPRPAIN201305UV02());
         when(mockOrchestratable.getTarget()).thenReturn(target);
+        when(mockOrchestratable.getNwhinResponseWrapperList()).thenReturn(createWrapperList());
+        when(mockOrchestratable.getNwhinResponseWrapperList().get(0).isFailure()).thenReturn(false);
+        when(mockOrchestratable.getDelegate()).thenReturn(new OutboundPatientDiscoveryDelegate());
+        when(mockOrchestratable.getResponseProcessor()).thenReturn(optional);
+        when(optional.get()).thenReturn(new Object());
         RespondingGatewayPRPAIN201306UV02ResponseType actualMessage = standardPD.respondingGatewayPRPAIN201305UV02(
             request, assertion);
         assertNotNull("Assertion MessageId is null", assertion.getMessageId());
-        verify(mockEJBLogger).auditRequestMessage(eq(request.getPRPAIN201305UV02()), any(AssertionType.class), any(
+        verify(mockEJBLogger).auditRequestMessage(any(PRPAIN201305UV02.class), any(AssertionType.class), any(
             NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.TRUE), isNull(Properties.class),
-            eq(NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME), any(PatientDiscoveryAuditTransforms.class));
+            eq(NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME), any(PatientDiscoveryAuditTransforms.class),
+            any(Integer.class), isNull(Exception.class));
     }
 
     @Test
@@ -139,7 +166,8 @@ public class StandardOutboundPatientDiscoveryTest {
         verify(mockEJBLogger, never()).auditRequestMessage(any(PRPAIN201305UV02.class), any(AssertionType.class),
             any(NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.TRUE), isNull(Properties.class),
-            eq(NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME), any(PatientDiscoveryAuditTransforms.class));
+            eq(NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME), any(PatientDiscoveryAuditTransforms.class),
+            any(Integer.class), isNull(Exception.class));
     }
 
     private NhinTargetCommunitiesType createNhinTargetCommunitiesType(String hcid) {
@@ -206,9 +234,29 @@ public class StandardOutboundPatientDiscoveryTest {
             @Override
             protected OutboundPatientDiscoveryOrchestratable createOrchestratable(PRPAIN201305UV02 message,
                 AssertionType assertion, NhinTargetSystemType target, NhincConstants.GATEWAY_API_LEVEL gatewayLevel) {
+                mockOrchestratable.setNwhinResponseWrapperList(createWrapperList());
+                return mockOrchestratable;
+            }
+
+            @Override
+            protected NhinCallableRequest<OutboundPatientDiscoveryOrchestratable>
+                getNwhinCallableList(OutboundPatientDiscoveryOrchestratable message) {
+                return nwhinCallable;
+            }
+
+            @Override
+            protected OutboundPatientDiscoveryOrchestratable
+                getOrchestratableMessage(List<NhinCallableRequest<OutboundPatientDiscoveryOrchestratable>> callableList, String transactionId) {
                 return mockOrchestratable;
             }
         };
-
     }
+
+    private ArrayList<NwhinPDResponseWrapper> createWrapperList() {
+        ArrayList<NwhinPDResponseWrapper> wrapperList = new ArrayList<>();
+        NwhinPDResponseWrapper wrapper = mock(NwhinPDResponseWrapper.class);
+        wrapperList.add(wrapper);
+        return wrapperList;
+    }
+
 }

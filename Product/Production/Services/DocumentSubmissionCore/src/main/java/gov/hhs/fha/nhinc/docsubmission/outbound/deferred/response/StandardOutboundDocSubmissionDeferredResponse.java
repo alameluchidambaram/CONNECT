@@ -158,7 +158,7 @@ public class StandardOutboundDocSubmissionDeferredResponse implements OutboundDo
         auditLogger.auditRequestMessage(request, assertion,
             MessageGeneratorUtils.getInstance().convertFirstToNhinTargetSystemType(targets),
             NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.TRUE, null,
-            NhincConstants.NHINC_XDR_RESPONSE_SERVICE_NAME);
+            NhincConstants.NHINC_XDR_RESPONSE_SERVICE_NAME, 0, null);
     }
 
     protected boolean hasNhinTargetHomeCommunityId(

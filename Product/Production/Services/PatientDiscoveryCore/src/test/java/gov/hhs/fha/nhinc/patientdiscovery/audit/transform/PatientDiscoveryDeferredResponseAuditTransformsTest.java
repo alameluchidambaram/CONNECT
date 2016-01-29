@@ -48,6 +48,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import org.junit.Test;
+import static org.mockito.Matchers.any;
 
 /**
  *
@@ -68,38 +69,38 @@ public class PatientDiscoveryDeferredResponseAuditTransformsTest extends AuditTr
 
         PatientDiscoveryDeferredResponseAuditTransforms transforms
             = new PatientDiscoveryDeferredResponseAuditTransforms() {
-            @Override
-            protected String getLocalHostAddress() {
-                return remoteIp;
-            }
+                @Override
+                protected String getLocalHostAddress() {
+                    return remoteIp;
+                }
 
-            @Override
-            protected String getRemoteHostAddress(Properties webContextProperties) {
-                if (webContextProperties != null && !webContextProperties.isEmpty() && webContextProperties
+                @Override
+                protected String getRemoteHostAddress(Properties webContextProperties) {
+                    if (webContextProperties != null && !webContextProperties.isEmpty() && webContextProperties
                     .getProperty(NhincConstants.REMOTE_HOST_ADDRESS) != null) {
 
-                    return webContextProperties.getProperty(NhincConstants.REMOTE_HOST_ADDRESS);
+                        return webContextProperties.getProperty(NhincConstants.REMOTE_HOST_ADDRESS);
+                    }
+                    return AuditTransformsConstants.ACTIVE_PARTICIPANT_UNKNOWN_IP_ADDRESS;
                 }
-                return AuditTransformsConstants.ACTIVE_PARTICIPANT_UNKNOWN_IP_ADDRESS;
-            }
 
-            @Override
-            protected String getWebServiceUrlFromRemoteObject(NhinTargetSystemType target, String serviceName) {
-                return remoteObjectUrl;
-            }
+                @Override
+                protected String getWebServiceUrlFromRemoteObject(NhinTargetSystemType target, String serviceName) {
+                    return remoteObjectUrl;
+                }
 
-            @Override
-            protected String getPDDeferredRequestInitiatorAddress() {
-                return localIp;
-            }
-        };
+                @Override
+                protected String getPDDeferredRequestInitiatorAddress() {
+                    return localIp;
+                }
+            };
 
         AssertionType assertion = createAssertion();
         LogEventRequestType auditRequest = transforms.transformRequestToAuditMsg(
             TestPatientDiscoveryMessageHelper.createPRPAIN201306UV02Response("Gallow", "Younger", "M", "01-12-2967",
                 "1.1", "D123401", "2.2", "abd3453dcd24wkkks545"), assertion, createNhinTarget(),
             NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.TRUE,
-            webContextProperties, NhincConstants.PATIENT_DISCOVERY_DEFERRED_RESP_SERVICE_NAME);
+            webContextProperties, NhincConstants.PATIENT_DISCOVERY_DEFERRED_RESP_SERVICE_NAME, new Integer(0), null);
 
         testGetEventIdentificationType(auditRequest, NhincConstants.PATIENT_DISCOVERY_DEFERRED_RESP_SERVICE_NAME,
             Boolean.TRUE);
@@ -175,7 +176,7 @@ public class PatientDiscoveryDeferredResponseAuditTransformsTest extends AuditTr
             TestPatientDiscoveryMessageHelper.createPRPAIN201306UV02Response("Gallow", "Younger", "M", "01-12-2967",
                 "1.1", "D123401", "2.2", "abd3453dcd24wkkks545"), new MCCIIN000002UV01(), assertion, createNhinTarget(),
             NhincConstants.AUDIT_LOG_INBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.FALSE,
-            webContextProperties, NhincConstants.PATIENT_DISCOVERY_DEFERRED_RESP_SERVICE_NAME);
+            webContextProperties, NhincConstants.PATIENT_DISCOVERY_DEFERRED_RESP_SERVICE_NAME, new Integer(0), null);
 
         testGetEventIdentificationType(auditResponse, NhincConstants.PATIENT_DISCOVERY_DEFERRED_RESP_SERVICE_NAME,
             Boolean.FALSE);

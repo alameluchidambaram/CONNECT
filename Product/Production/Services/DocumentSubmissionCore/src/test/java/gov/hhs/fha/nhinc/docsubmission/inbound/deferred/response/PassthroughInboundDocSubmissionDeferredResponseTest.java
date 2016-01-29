@@ -85,7 +85,8 @@ public class PassthroughInboundDocSubmissionDeferredResponseTest {
         verify(mockEJBLogger).auditResponseMessage(eq(regResponse), eq(actualResponse), eq(assertion),
             isNull(NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.NHINC_XDR_RESPONSE_SERVICE_NAME), any(DSDeferredResponseAuditTransforms.class));
+            eq(NhincConstants.NHINC_XDR_RESPONSE_SERVICE_NAME), any(DSDeferredResponseAuditTransforms.class),
+            any(Integer.class), any(Exception.class));
     }
 
     @Test
@@ -116,7 +117,8 @@ public class PassthroughInboundDocSubmissionDeferredResponseTest {
         verify(mockEJBLogger, never()).auditResponseMessage(eq(regResponse), eq(actualResponse), eq(assertion),
             isNull(NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.NHINC_XDR_RESPONSE_SERVICE_NAME), any(DSDeferredResponseAuditTransforms.class));
+            eq(NhincConstants.NHINC_XDR_RESPONSE_SERVICE_NAME), any(DSDeferredResponseAuditTransforms.class),
+            any(Integer.class), any(Exception.class));
     }
 
     private DSDeferredResponseAuditLogger getAuditLogger(final boolean isAuditOn) {

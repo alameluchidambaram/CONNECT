@@ -90,7 +90,7 @@ public class PassthroughOutboundDocRetrieveTest extends AbstractOutboundDocRetri
         verify(mockEJBLogger).auditRequestMessage(eq(request), eq(assertion), any(NhinTargetSystemType.class),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.DOC_RETRIEVE_SERVICE_NAME),
-            any(DocRetrieveAuditTransforms.class));
+            any(DocRetrieveAuditTransforms.class), any(Integer.class), any(Exception.class));
     }
 
     @Test
@@ -113,7 +113,7 @@ public class PassthroughOutboundDocRetrieveTest extends AbstractOutboundDocRetri
         verify(mockEJBLogger, never()).auditRequestMessage(eq(request), eq(assertion), any(NhinTargetSystemType.class),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.DOC_RETRIEVE_SERVICE_NAME),
-            any(DocRetrieveAuditTransforms.class));
+            any(DocRetrieveAuditTransforms.class), any(Integer.class), any(Exception.class));
     }
 
     /* (non-Javadoc)

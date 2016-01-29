@@ -75,9 +75,10 @@ public class PassthroughOutboundPatientDiscoveryDeferredRequest extends Abstract
     public MCCIIN000002UV01 processPatientDiscoveryAsyncReq(PRPAIN201305UV02 request, AssertionType assertion,
         NhinTargetCommunitiesType targets) {
 
+        MCCIIN000002UV01 response = sendToNhin(request, assertion, targets);
         auditRequest(request, MessageGeneratorUtils.getInstance().generateMessageId(assertion),
             msgUtils.convertFirstToNhinTargetSystemType(targets));
-        return sendToNhin(request, assertion, targets);
+        return response;
     }
 
     @Override

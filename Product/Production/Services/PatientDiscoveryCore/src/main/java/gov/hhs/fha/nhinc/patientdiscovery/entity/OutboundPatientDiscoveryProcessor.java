@@ -36,9 +36,11 @@ import gov.hhs.fha.nhinc.orchestration.OutboundOrchestratableMessage;
 import gov.hhs.fha.nhinc.orchestration.OutboundResponseProcessor;
 import gov.hhs.fha.nhinc.patientdiscovery.MessageGeneratorUtils;
 import gov.hhs.fha.nhinc.patientdiscovery.PatientDiscovery201306Processor;
+import gov.hhs.fha.nhinc.patientdiscovery.nhin.proxy.NwhinPDResponseWrapper;
 import gov.hhs.fha.nhinc.patientdiscovery.response.ResponseFactory;
 import gov.hhs.fha.nhinc.patientdiscovery.response.ResponseParams;
 import gov.hhs.fha.nhinc.transform.subdisc.HL7PRPA201306Transforms;
+import java.util.ArrayList;
 import org.hl7.v3.CommunityPRPAIN201306UV02ResponseType;
 import org.hl7.v3.PRPAIN201306UV02;
 import org.hl7.v3.ProxyPRPAIN201305UVProxySecuredRequestType;
@@ -60,6 +62,10 @@ public class OutboundPatientDiscoveryProcessor implements OutboundResponseProces
 
     public OutboundPatientDiscoveryProcessor(NhincConstants.GATEWAY_API_LEVEL level) {
         cumulativeSpecLevel = level;
+    }
+
+    public OutboundPatientDiscoveryProcessor() {
+
     }
 
     /**
@@ -128,6 +134,7 @@ public class OutboundPatientDiscoveryProcessor implements OutboundResponseProces
                 OutboundPatientDiscoveryOrchestratable responseOrch = new OutboundPatientDiscoveryOrchestratable(null,
                     individual.getResponseProcessor(), null, individual.getAssertion(),
                     individual.getServiceName(), individual.getTarget(), individual.getRequest());
+                responseOrch.setWrapper(individual.getWrapper());
 
                 ProxyPRPAIN201305UVProxySecuredRequestType request = createRequestFromOrchestratable(individual);
 
@@ -206,12 +213,14 @@ public class OutboundPatientDiscoveryProcessor implements OutboundResponseProces
                 OutboundPatientDiscoveryOrchestratable cumulativeResponse = (OutboundPatientDiscoveryOrchestratable) cumulative;
                 OutboundPatientDiscoveryOrchestratable individualResponse = individual;
                 addResponseToCumulativeResponse(individualResponse, cumulativeResponse);
+                addNwhinWrapperList(individualResponse, cumulativeResponse);
 
                 OutboundPatientDiscoveryOrchestratable response = new OutboundPatientDiscoveryOrchestratable(null,
                     Optional.<OutboundResponseProcessor>absent(), null, cumulativeResponse.getAssertion(),
                     cumulativeResponse.getServiceName(), cumulativeResponse.getTarget(),
                     cumulativeResponse.getRequest());
                 response.setCumulativeResponse(cumulativeResponse.getCumulativeResponse());
+                response.setNwhinResponseWrapperList(cumulativeResponse.getNwhinResponseWrapperList());
                 return response;
             } else {
                 LOG.error("EntityPatientDiscoveryProcessor::aggregateResponse cumulativeResponse received was unknown.");
@@ -293,6 +302,26 @@ public class OutboundPatientDiscoveryProcessor implements OutboundResponseProces
             communityResponse.setPRPAIN201306UV02(current);
 
             cumulativeResponse.getCumulativeResponse().getCommunityResponse().add(communityResponse);
+            LOG.debug("EntityPatientDiscoveryProcessor::aggregateResponse combine next response done cumulativeResponse count="
+                + count);
+        } else {
+            throw new Exception(
+                "EntityPatientDiscoveryProcessor::aggregateResponse received a null PRPAIN201306UV02 response.");
+        }
+    }
+
+    private void addNwhinWrapperList(OutboundPatientDiscoveryOrchestratable individual,
+        OutboundPatientDiscoveryOrchestratable cumulativeResponse) throws Exception {
+
+        NwhinPDResponseWrapper current = individual.getWrapper();
+        if (current != null) {
+            if (cumulativeResponse.getNwhinResponseWrapperList() != null) {
+                cumulativeResponse.getNwhinResponseWrapperList().add(current);
+            } else {
+                ArrayList<NwhinPDResponseWrapper> warpperList = new ArrayList<>();
+                cumulativeResponse.setNwhinResponseWrapperList(warpperList);
+                cumulativeResponse.getNwhinResponseWrapperList().add(current);
+            }
             LOG.debug("EntityPatientDiscoveryProcessor::aggregateResponse combine next response done cumulativeResponse count="
                 + count);
         } else {

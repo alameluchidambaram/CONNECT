@@ -163,7 +163,7 @@ public class StandardOutboundDocQuery implements OutboundDocQuery {
     private void auditRequest(AdhocQueryRequest request, AssertionType assertion, NhinTargetSystemType target) {
         getAuditLogger().auditRequestMessage(request, assertion, target,
             NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE,
-            Boolean.TRUE, null, NhincConstants.DOC_QUERY_SERVICE_NAME);
+            Boolean.TRUE, null, NhincConstants.DOC_QUERY_SERVICE_NAME, 0, null);
 
     }
 

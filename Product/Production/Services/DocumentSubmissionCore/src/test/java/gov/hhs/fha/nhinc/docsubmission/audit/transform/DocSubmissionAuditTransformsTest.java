@@ -96,7 +96,7 @@ public class DocSubmissionAuditTransformsTest extends AuditTransformsTest<
         AssertionType assertion = createAssertion();
         LogEventRequestType auditRequest = transforms.transformRequestToAuditMsg(request, assertion,
             createNhinTarget(), NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE,
-            Boolean.TRUE, null, NhincConstants.NHINC_XDR_SERVICE_NAME);
+            Boolean.TRUE, null, NhincConstants.NHINC_XDR_SERVICE_NAME, new Integer(0), null);
         testGetEventIdentificationType(auditRequest, NhincConstants.NHINC_XDR_SERVICE_NAME, Boolean.TRUE);
         testCreateActiveParticipantFromUser(auditRequest, Boolean.TRUE, assertion);
         testGetActiveParticipantDestination(auditRequest, Boolean.TRUE, null, WS_REQUEST_URL, REMOTE_IP);
@@ -141,7 +141,7 @@ public class DocSubmissionAuditTransformsTest extends AuditTransformsTest<
         AssertionType assertion = createAssertion();
         LogEventRequestType auditResponse = transforms.transformResponseToAuditMsg(request, response, assertion, null,
             NhincConstants.AUDIT_LOG_INBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE,
-            Boolean.FALSE, webContextProperties, NhincConstants.NHINC_XDR_SERVICE_NAME);
+            Boolean.FALSE, webContextProperties, NhincConstants.NHINC_XDR_SERVICE_NAME, new Integer(0), null);
         testGetEventIdentificationType(auditResponse, NhincConstants.NHINC_XDR_SERVICE_NAME, Boolean.FALSE);
         testGetActiveParticipantDestination(auditResponse, Boolean.FALSE, webContextProperties, WS_REQUEST_URL);
         testAuditSourceIdentification(auditResponse.getAuditMessage().getAuditSourceIdentification(), assertion);

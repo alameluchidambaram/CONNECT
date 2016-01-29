@@ -118,7 +118,8 @@ public class StandardInboundDocRetrieveTest {
         verify(mockEJBLogger).auditResponseMessage(eq(request), eq(actualResponse), eq(assertion),
             isNull(NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.DOC_RETRIEVE_SERVICE_NAME), any(DocRetrieveAuditTransforms.class));
+            eq(NhincConstants.DOC_RETRIEVE_SERVICE_NAME), any(DocRetrieveAuditTransforms.class), any(Integer.class),
+            any(Exception.class));
 
         // Verify that the orchestrator is processing the correct orchestratable
         ArgumentCaptor< InboundDocRetrieveOrchestratable> orchArgument = ArgumentCaptor
@@ -163,7 +164,8 @@ public class StandardInboundDocRetrieveTest {
         verify(mockEJBLogger, never()).auditResponseMessage(eq(request), eq(actualResponse), eq(assertion),
             isNull(NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.DOC_RETRIEVE_SERVICE_NAME), any(DocRetrieveAuditTransforms.class));
+            eq(NhincConstants.DOC_RETRIEVE_SERVICE_NAME), any(DocRetrieveAuditTransforms.class), any(Integer.class),
+            any(Exception.class));
     }
 
     private DocRetrieveAuditLogger getAuditLogger(final boolean isLoggingOn) {

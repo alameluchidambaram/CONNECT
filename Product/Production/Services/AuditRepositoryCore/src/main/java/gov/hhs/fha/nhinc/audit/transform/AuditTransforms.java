@@ -99,11 +99,13 @@ public abstract class AuditTransforms<T, K> {
      * @param isRequesting Initiating/Responding Gateway
      * @param webContextProperties Properties which hold destination URL and remote IP
      * @param serviceName Service Name
+     * @param outcome Reflects the transaction success/failure
+     * @param exception
      * @return Audit Request
      */
     public final LogEventRequestType transformRequestToAuditMsg(T request, AssertionType assertion,
         NhinTargetSystemType target, String direction, String _interface, boolean isRequesting,
-        Properties webContextProperties, String serviceName) {
+        Properties webContextProperties, String serviceName, Integer outcome, Exception exception) {
 
         setRequest(request);
         setTarget(target);
@@ -114,9 +116,10 @@ public abstract class AuditTransforms<T, K> {
         auditMsg = getParticipantObjectIdentificationForRequest(request, assertion, auditMsg);
 
         return buildLogEventRequestType(auditMsg, direction, getMessageCommunityId(assertion, target, isRequesting),
-                serviceName, assertion, auditMsg.getEventIdentification().getEventID().getDisplayName(), auditMsg
-                        .getEventIdentification().getEventOutcomeIndicator(), auditMsg.getEventIdentification()
-                        .getEventDateTime(), getRequestorUserId(auditMsg.getActiveParticipant(), assertion));
+            serviceName, assertion, auditMsg.getEventIdentification().getEventID().getDisplayName(),
+            new BigInteger(String.valueOf(outcome)),
+            auditMsg.getEventIdentification().getEventDateTime(), getUserId(auditMsg.getActiveParticipant()),
+            exception);
     }
 
     /**
@@ -131,11 +134,13 @@ public abstract class AuditTransforms<T, K> {
      * @param isRequesting Initiating/Responding Gateway
      * @param webContextProperties Properties hold destination URL and remote IP
      * @param serviceName Service Name
+     * @param outcome
+     * @param exception
      * @return Audit Request
      */
     public final LogEventRequestType transformResponseToAuditMsg(T request, K response, AssertionType assertion,
         NhinTargetSystemType target, String direction, String _interface, boolean isRequesting,
-        Properties webContextProperties, String serviceName) {
+        Properties webContextProperties, String serviceName, Integer outcome, Exception exception) {
 
         setRequest(request);
         setAssertion(assertion);
@@ -144,9 +149,10 @@ public abstract class AuditTransforms<T, K> {
             serviceName);
         auditMsg = getParticipantObjectIdentificationForResponse(request, response, assertion, auditMsg);
         return buildLogEventRequestType(auditMsg, direction, getMessageCommunityId(assertion, target, isRequesting),
-                serviceName, assertion, auditMsg.getEventIdentification().getEventID().getDisplayName(), auditMsg
-                        .getEventIdentification().getEventOutcomeIndicator(), auditMsg.getEventIdentification()
-                        .getEventDateTime(), getRequestorUserId(auditMsg.getActiveParticipant(), assertion));
+            serviceName, assertion, auditMsg.getEventIdentification().getEventID().getDisplayName(),
+            new BigInteger(String.valueOf(outcome)),
+            auditMsg.getEventIdentification().getEventDateTime(), getUserId(auditMsg.getActiveParticipant()), exception);
+
     }
 
     /**
@@ -157,7 +163,7 @@ public abstract class AuditTransforms<T, K> {
      * @return return userId from Audit Active participant/AssertType in order
      */
     private final String getRequestorUserId(final List<ActiveParticipant> activeParticipants,
-            final AssertionType assertionType) {
+        final AssertionType assertionType) {
         String userId = getUserId(activeParticipants);
         LOG.debug("Extract userName from Active Participant: {}", userId);
         if (StringUtils.isEmpty(userId)) {
@@ -165,6 +171,7 @@ public abstract class AuditTransforms<T, K> {
             LOG.debug("Extract userName from assertion: {}", userId);
         }
         return userId;
+
     }
 
     /**
@@ -557,9 +564,9 @@ public abstract class AuditTransforms<T, K> {
         return userName;
     }
 
-    private LogEventRequestType buildLogEventRequestType(AuditMessageType auditMsg, String direction,
-        String communityId, String serviceName, AssertionType assertion, String eventId, BigInteger outcome,
-        XMLGregorianCalendar eventDate, String userId) {
+    private LogEventRequestType buildLogEventRequestType(AuditMessageType auditMsg, String direction, String communityId,
+        String serviceName, AssertionType assertion, String eventId, BigInteger outcome, XMLGregorianCalendar eventDate,
+        String userId, Exception exception) {
 
         LogEventRequestType result = new LogEventRequestType();
         result.setAuditMessage(auditMsg);
@@ -574,7 +581,19 @@ public abstract class AuditTransforms<T, K> {
         result.setEventTimestamp(eventDate);
         result.setRelatesTo(getRelatesTo(assertion));
         result.setRequestMessageId(assertion.getMessageId());
+        if (exception != null) {
+            result.setReason(exception.getLocalizedMessage());
+        }
+        result.setStatus(getStatus(outcome));
         return result;
+    }
+
+    private String getStatus(BigInteger outcome) {
+        if (outcome.signum() == 0) {
+            return "Success";
+        } else {
+            return "Failure";
+        }
     }
 
     protected ConnectionManagerCache getConnectionManagerCache() {
@@ -636,9 +655,9 @@ public abstract class AuditTransforms<T, K> {
         for (ActiveParticipant obj : participants) {
             if (NullChecker.isNotNullish(obj.getRoleIDCode())
                 && !obj.getRoleIDCode().get(0).getDisplayName().equals(
-                AuditTransformsConstants.ACTIVE_PARTICIPANT_ROLE_CODE_SOURCE_DISPLAY_NAME)
+                    AuditTransformsConstants.ACTIVE_PARTICIPANT_ROLE_CODE_SOURCE_DISPLAY_NAME)
                 && !obj.getRoleIDCode().get(0).getDisplayName().equals(
-                AuditTransformsConstants.ACTIVE_PARTICIPANT_ROLE_CODE_DESTINATION_DISPLAY_NAME)) {
+                    AuditTransformsConstants.ACTIVE_PARTICIPANT_ROLE_CODE_DESTINATION_DISPLAY_NAME)) {
 
                 return obj.getUserID();
             }

@@ -45,6 +45,6 @@ public abstract class AbstractOutboundPatientDiscoveryDeferredRequest implements
 
         getPatientDiscoveryDeferredAuditLogger().auditRequestMessage(request, assertion, target,
             NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.TRUE,
-            null, NhincConstants.PATIENT_DISCOVERY_DEFERRED_REQ_SERVICE_NAME);
+            null, NhincConstants.PATIENT_DISCOVERY_DEFERRED_REQ_SERVICE_NAME, 0, null);
     }
 }

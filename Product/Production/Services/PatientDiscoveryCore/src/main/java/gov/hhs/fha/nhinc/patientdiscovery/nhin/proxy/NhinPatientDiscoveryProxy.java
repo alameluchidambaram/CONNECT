@@ -29,7 +29,6 @@ package gov.hhs.fha.nhinc.patientdiscovery.nhin.proxy;
 import gov.hhs.fha.nhinc.common.nhinccommon.AssertionType;
 import gov.hhs.fha.nhinc.common.nhinccommon.NhinTargetSystemType;
 import org.hl7.v3.PRPAIN201305UV02;
-import org.hl7.v3.PRPAIN201306UV02;
 
 /**
  *
@@ -37,6 +36,6 @@ import org.hl7.v3.PRPAIN201306UV02;
  */
 public interface NhinPatientDiscoveryProxy {
 
-    public PRPAIN201306UV02 respondingGatewayPRPAIN201305UV02(PRPAIN201305UV02 request, AssertionType assertion,
-            NhinTargetSystemType target) throws Exception;
+    public NwhinPDResponseWrapper respondingGatewayPRPAIN201305UV02(PRPAIN201305UV02 request, AssertionType assertion,
+        NhinTargetSystemType target) throws Exception;
 }

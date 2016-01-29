@@ -85,7 +85,8 @@ public class PassthroughInboundDocSubmissionDeferredRequestTest {
         verify(mockEJBLogger).auditResponseMessage(eq(request), eq(actualResponse), eq(assertion), isNull(
             NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME), any(DocSubmissionDeferredRequestAuditTransforms.class));
+            eq(NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME), any(DocSubmissionDeferredRequestAuditTransforms.class),
+            any(Integer.class), any(Exception.class));
     }
 
     @Test
@@ -111,7 +112,8 @@ public class PassthroughInboundDocSubmissionDeferredRequestTest {
         verify(mockEJBLogger).auditResponseMessage(eq(request), eq(actualResponse), eq(assertion), isNull(
             NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME), any(DocSubmissionDeferredRequestAuditTransforms.class));
+            eq(NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME), any(DocSubmissionDeferredRequestAuditTransforms.class),
+            any(Integer.class), any(Exception.class));
     }
 
     @Test
@@ -135,7 +137,8 @@ public class PassthroughInboundDocSubmissionDeferredRequestTest {
         verify(mockEJBLogger, never()).auditResponseMessage(eq(request), eq(actualResponse), eq(assertion), isNull(
             NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME), any(DocSubmissionDeferredRequestAuditTransforms.class));
+            eq(NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME), any(DocSubmissionDeferredRequestAuditTransforms.class),
+            any(Integer.class), any(Exception.class));
     }
 
     private DocSubmissionDeferredRequestAuditLogger getAuditLogger(final boolean isAuditOn) {

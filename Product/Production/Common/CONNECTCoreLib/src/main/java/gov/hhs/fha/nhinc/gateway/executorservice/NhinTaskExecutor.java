@@ -78,7 +78,7 @@ public class NhinTaskExecutor<CumulativeResponse extends OutboundOrchestratableM
      * Called when TaskExecutor is complete to retrieve the final result
      *
      * @return Response which contains all the responses from the individual CallableRequest aggregated into a single
-     *         response
+     * response
      */
     public CumulativeResponse getFinalResponse() {
         return cumulativeResponse;
@@ -91,7 +91,7 @@ public class NhinTaskExecutor<CumulativeResponse extends OutboundOrchestratableM
 
         try {
             CompletionService<IndividualResponse> executorCompletionService = new ExecutorCompletionService<>(
-                    executor);
+                executor);
             // loop through the callableList and submit the callable requests for execution
             for (NhinCallableRequest<IndividualResponse> c : callableList) {
                 executorCompletionService.submit(c);
@@ -115,11 +115,11 @@ public class NhinTaskExecutor<CumulativeResponse extends OutboundOrchestratableM
                             Optional<OutboundResponseProcessor> optionalProcessor = r.getResponseProcessor();
                             if (!optionalProcessor.isPresent()) {
                                 throw new IllegalArgumentException(
-                                        "IndividualResponse.getResponseProcessor returned null");
+                                    "IndividualResponse.getResponseProcessor returned null");
                             }
                             OutboundResponseProcessor processor = optionalProcessor.get();
                             cumulativeResponse = (CumulativeResponse) processor.processNhinResponse(r,
-                                    cumulativeResponse);
+                                cumulativeResponse);
                         } else {
                             // shouldn't ever get here, but if we do all we can do is log and skip it
                             LOG.error("NhinTaskExecutor::executeTask (count=" + count + ") received null response!!!!!");

@@ -86,7 +86,7 @@ public class PassthroughOutboundDocSubmissionDeferredResponse implements Outboun
         NhinTargetSystemType targets) {
         auditLogger.auditRequestMessage(request, assertion, targets,
             NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.TRUE, null,
-            NhincConstants.NHINC_XDR_RESPONSE_SERVICE_NAME);
+            NhincConstants.NHINC_XDR_RESPONSE_SERVICE_NAME, 0, null);
     }
 
     protected DSDeferredResponseAuditLogger getAuditLogger() {

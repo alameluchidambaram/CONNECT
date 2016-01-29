@@ -112,7 +112,7 @@ public class StandardOutboundDocSubmissionDeferredRequestTest {
         verify(mockEJBLogger).auditRequestMessage(eq(request), eq(assertion), any(NhinTargetSystemType.class),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME),
-            any(DocSubmissionDeferredRequestAuditTransforms.class));
+            any(DocSubmissionDeferredRequestAuditTransforms.class), any(Integer.class), any(Exception.class));
     }
 
     @Test
@@ -140,7 +140,7 @@ public class StandardOutboundDocSubmissionDeferredRequestTest {
         verify(mockEJBLogger).auditRequestMessage(eq(request), eq(assertion), any(NhinTargetSystemType.class),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME),
-            any(DocSubmissionDeferredRequestAuditTransforms.class));
+            any(DocSubmissionDeferredRequestAuditTransforms.class), any(Integer.class), any(Exception.class));
     }
 
     @Test
@@ -168,7 +168,7 @@ public class StandardOutboundDocSubmissionDeferredRequestTest {
         verify(mockEJBLogger).auditRequestMessage(eq(request), eq(assertion), any(NhinTargetSystemType.class),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME),
-            any(DocSubmissionDeferredRequestAuditTransforms.class));
+            any(DocSubmissionDeferredRequestAuditTransforms.class), any(Integer.class), any(Exception.class));
     }
 
     @Test
@@ -250,7 +250,7 @@ public class StandardOutboundDocSubmissionDeferredRequestTest {
         verify(mockEJBLogger, never()).auditRequestMessage(eq(request), eq(assertion), any(NhinTargetSystemType.class),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME),
-            any(DocSubmissionDeferredRequestAuditTransforms.class));
+            any(DocSubmissionDeferredRequestAuditTransforms.class), any(Integer.class), any(Exception.class));
     }
 
     private OutboundDocSubmissionDeferredRequestOrchestratable createOutboundDocSubmissionDeferredRequestOrchestratable(

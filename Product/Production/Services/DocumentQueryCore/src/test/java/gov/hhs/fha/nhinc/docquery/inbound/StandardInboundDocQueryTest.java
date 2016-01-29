@@ -73,11 +73,11 @@ public class StandardInboundDocQueryTest extends InboundDocQueryTest {
 
         StandardInboundDocQuery standardDocQuery = new StandardInboundDocQuery(policyChecker,
             getMockAdapterFactory(mockAssertion), getAuditLogger(true)) {
-            @Override
-            protected String getLocalHomeCommunityId() {
-                return RESPONDING_HCID_FORMATTED;
-            }
-        };
+                @Override
+                protected String getLocalHomeCommunityId() {
+                    return RESPONDING_HCID_FORMATTED;
+                }
+            };
 
         when(policyChecker.checkIncomingPolicy(request, mockAssertion)).thenReturn(true);
 
@@ -97,11 +97,11 @@ public class StandardInboundDocQueryTest extends InboundDocQueryTest {
 
         StandardInboundDocQuery standardDocQuery = new StandardInboundDocQuery(policyChecker, mockAdapterFactory,
             getAuditLogger(true)) {
-            @Override
-            protected String getLocalHomeCommunityId() {
-                return RESPONDING_HCID_FORMATTED;
-            }
-        };
+                @Override
+                protected String getLocalHomeCommunityId() {
+                    return RESPONDING_HCID_FORMATTED;
+                }
+            };
         AdhocQueryResponse actualResponse = standardDocQuery.respondingGatewayCrossGatewayQuery(request, assertion,
             webContextProperties);
 
@@ -113,6 +113,7 @@ public class StandardInboundDocQueryTest extends InboundDocQueryTest {
         verify(mockEJBLogger).auditResponseMessage(eq(request), eq(actualResponse), eq(assertion), isNull(
             NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.DOC_QUERY_SERVICE_NAME), any(DocQueryAuditTransforms.class));
+            eq(NhincConstants.DOC_QUERY_SERVICE_NAME), any(DocQueryAuditTransforms.class), any(Integer.class),
+            any(Exception.class));
     }
 }

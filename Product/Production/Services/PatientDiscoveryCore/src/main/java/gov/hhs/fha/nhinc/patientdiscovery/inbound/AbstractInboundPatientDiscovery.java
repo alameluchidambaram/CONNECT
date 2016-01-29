@@ -64,6 +64,6 @@ public abstract class AbstractInboundPatientDiscovery implements InboundPatientD
 
         getAuditLogger().auditResponseMessage(request, response, assertion, null,
             NhincConstants.AUDIT_LOG_INBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.FALSE,
-            webContextProperties, NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME);
+            webContextProperties, NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME, 0, null);
     }
 }

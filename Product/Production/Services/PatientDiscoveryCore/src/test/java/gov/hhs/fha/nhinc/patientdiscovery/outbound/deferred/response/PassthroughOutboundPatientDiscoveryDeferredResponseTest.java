@@ -93,7 +93,7 @@ public class PassthroughOutboundPatientDiscoveryDeferredResponseTest {
         verify(mockEJBLogger).auditRequestMessage(eq(request), eq(assertion), any(NhinTargetSystemType.class),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.PATIENT_DISCOVERY_DEFERRED_RESP_SERVICE_NAME),
-            any(PatientDiscoveryDeferredResponseAuditTransforms.class));
+            any(PatientDiscoveryDeferredResponseAuditTransforms.class), any(Integer.class), isNull(Exception.class));
     }
 
     @Test
@@ -125,7 +125,7 @@ public class PassthroughOutboundPatientDiscoveryDeferredResponseTest {
         verify(mockEJBLogger, never()).auditRequestMessage(eq(request), eq(assertion), any(NhinTargetSystemType.class),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.PATIENT_DISCOVERY_DEFERRED_RESP_SERVICE_NAME),
-            any(PatientDiscoveryDeferredResponseAuditTransforms.class));
+            any(PatientDiscoveryDeferredResponseAuditTransforms.class), any(Integer.class), isNull(Exception.class));
 
     }
 

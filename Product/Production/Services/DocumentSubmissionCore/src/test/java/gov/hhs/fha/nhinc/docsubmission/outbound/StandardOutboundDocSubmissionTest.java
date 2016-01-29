@@ -114,7 +114,7 @@ public class StandardOutboundDocSubmissionTest {
         verify(mockEJBLogger).auditRequestMessage(eq(request), eq(assertion), eq(target),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.NHINC_XDR_SERVICE_NAME),
-            any(DocSubmissionAuditTransforms.class));
+            any(DocSubmissionAuditTransforms.class), any(Integer.class), any(Exception.class));
 
         assertNotNull(actualResponse);
         assertEquals(actualResponse.getStatus(), successResponse.getStatus());
@@ -142,7 +142,7 @@ public class StandardOutboundDocSubmissionTest {
         verify(mockEJBLogger).auditRequestMessage(eq(request), eq(assertion), eq(target),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.NHINC_XDR_SERVICE_NAME),
-            any(DocSubmissionAuditTransforms.class));
+            any(DocSubmissionAuditTransforms.class), any(Integer.class), any(Exception.class));
 
         assertNotNull(response);
         assertTrue(response.getRegistryErrorList().getRegistryError().size() > 0);
@@ -164,7 +164,7 @@ public class StandardOutboundDocSubmissionTest {
         verify(mockEJBLogger).auditRequestMessage(eq(request), eq(assertion), isNull(NhinTargetSystemType.class),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.NHINC_XDR_SERVICE_NAME),
-            any(DocSubmissionAuditTransforms.class));
+            any(DocSubmissionAuditTransforms.class), any(Integer.class), any(Exception.class));
 
         assertNotNull(response);
         assertTrue(response.getRegistryErrorList().getRegistryError().size() > 0);
@@ -249,7 +249,7 @@ public class StandardOutboundDocSubmissionTest {
         verify(mockEJBLogger, never()).auditRequestMessage(eq(request), eq(assertion), eq(target),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.NHINC_XDR_SERVICE_NAME),
-            any(DocSubmissionAuditTransforms.class));
+            any(DocSubmissionAuditTransforms.class), any(Integer.class), any(Exception.class));
 
         assertNotNull(actualResponse);
         assertEquals(actualResponse.getStatus(), successResponse.getStatus());

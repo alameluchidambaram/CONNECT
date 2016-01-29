@@ -38,6 +38,9 @@ import gov.hhs.fha.nhinc.patientdiscovery.audit.PatientDiscoveryAuditLogger;
 import gov.hhs.fha.nhinc.patientdiscovery.audit.transform.PatientDiscoveryAuditTransforms;
 import gov.hhs.fha.nhinc.patientdiscovery.entity.OutboundPatientDiscoveryDelegate;
 import gov.hhs.fha.nhinc.patientdiscovery.entity.OutboundPatientDiscoveryOrchestratable;
+import gov.hhs.fha.nhinc.patientdiscovery.nhin.proxy.NwhinPDResponseWrapper;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import org.hl7.v3.PRPAIN201305UV02;
 import org.hl7.v3.PRPAIN201306UV02;
@@ -45,12 +48,22 @@ import org.hl7.v3.RespondingGatewayPRPAIN201305UV02RequestType;
 import org.hl7.v3.RespondingGatewayPRPAIN201306UV02ResponseType;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertSame;
 import org.junit.Test;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isNull;
+import static org.mockito.Matchers.isNull;
+import static org.mockito.Matchers.isNull;
 import static org.mockito.Matchers.isNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -66,12 +79,17 @@ public class PassthroughOutboundPatientDiscoveryTest {
 
     @Test
     public void invoke() {
+        NwhinPDResponseWrapper wrapper = new NwhinPDResponseWrapper();
+        List<NwhinPDResponseWrapper> wrapperList = new ArrayList<>();
         RespondingGatewayPRPAIN201305UV02RequestType request = new RespondingGatewayPRPAIN201305UV02RequestType();
         request.setPRPAIN201305UV02(new PRPAIN201305UV02());
         request.setNhinTargetCommunities(createNhinTargetCommunitiesType(TARGET_HCID));
         AssertionType assertion = new AssertionType();
+        wrapper.setAssertion(assertion);
         OutboundPatientDiscoveryOrchestratable outOrchestratable = new OutboundPatientDiscoveryOrchestratable();
+        wrapperList.add(wrapper);
         outOrchestratable.setResponse(new PRPAIN201306UV02());
+        outOrchestratable.setNwhinResponseWrapperList((ArrayList<NwhinPDResponseWrapper>) wrapperList);
         PatientDiscoveryAuditLogger auditLogger = getAuditLogger(true);
 
         when(delegate.process(any(OutboundPatientDiscoveryOrchestratable.class))).thenReturn(outOrchestratable);
@@ -82,10 +100,11 @@ public class PassthroughOutboundPatientDiscoveryTest {
 
         assertSame(outOrchestratable.getResponse(), actualMessage.getCommunityResponse().get(0).getPRPAIN201306UV02());
         assertNotNull("Assertion MessageId is null", assertion.getMessageId());
-        verify(mockEJBLogger).auditRequestMessage(eq(request.getPRPAIN201305UV02()), any(AssertionType.class), any(
+        verify(mockEJBLogger).auditRequestMessage(any(PRPAIN201305UV02.class), any(AssertionType.class), any(
             NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.TRUE), isNull(Properties.class),
-            eq(NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME), any(PatientDiscoveryAuditTransforms.class));
+            eq(NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME), any(PatientDiscoveryAuditTransforms.class),
+            any(Integer.class), isNull(Exception.class));
     }
 
     @Test
@@ -100,6 +119,7 @@ public class PassthroughOutboundPatientDiscoveryTest {
         PatientDiscoveryAuditLogger auditLogger = getAuditLogger(false);
 
         when(delegate.process(any(OutboundPatientDiscoveryOrchestratable.class))).thenReturn(outOrchestratable);
+        outOrchestratable.setNwhinResponseWrapperList(createWrapperList());
         PassthroughOutboundPatientDiscovery passthroughPatientDiscovery = new PassthroughOutboundPatientDiscovery(
             delegate, auditLogger);
         RespondingGatewayPRPAIN201306UV02ResponseType actualMessage = passthroughPatientDiscovery
@@ -110,7 +130,8 @@ public class PassthroughOutboundPatientDiscoveryTest {
         verify(mockEJBLogger, never()).auditRequestMessage(eq(request.getPRPAIN201305UV02()), any(AssertionType.class),
             any(NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.TRUE), isNull(Properties.class),
-            eq(NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME), any(PatientDiscoveryAuditTransforms.class));
+            eq(NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME), any(PatientDiscoveryAuditTransforms.class),
+            any(Integer.class), isNull(Exception.class));
     }
 
     private NhinTargetCommunitiesType createNhinTargetCommunitiesType(String hcid) {
@@ -139,5 +160,13 @@ public class PassthroughOutboundPatientDiscoveryTest {
                 return isLoggingOn;
             }
         };
+    }
+
+    private ArrayList<NwhinPDResponseWrapper> createWrapperList() {
+        ArrayList<NwhinPDResponseWrapper> wrapperList = new ArrayList<>();
+        NwhinPDResponseWrapper wrapper = new NwhinPDResponseWrapper();
+        wrapper.setFailure(false);
+        wrapperList.add(wrapper);
+        return wrapperList;
     }
 }

@@ -84,28 +84,34 @@ public class DocQueryAuditTransformsTest extends AuditTransformsTest<AdhocQueryR
 
     @Test
     public void testRequestAuditMsgHCIDWithOutPrefix() throws ConnectionManagerException, UnknownHostException {
+        Integer outcome = 0;
         transformRequestToAuditMsg(createAdhocQueryRequest(), createNhinTarget(REMOTE_HCID_WITHOUT_PREFIX),
-            REMOTE_HCID_WITH_PREFIX);
+            REMOTE_HCID_WITH_PREFIX, outcome);
     }
 
     @Test
     public void testRequestAuditMsgHCIDWithPrefix() throws ConnectionManagerException, UnknownHostException {
+        Integer outcome = 0;
         transformRequestToAuditMsg(createAdhocQueryRequest(), createNhinTarget(REMOTE_HCID_WITH_PREFIX),
-            REMOTE_HCID_WITH_PREFIX);
+            REMOTE_HCID_WITH_PREFIX, outcome);
     }
 
     @Test
     public void testResponseAuditMsgHCIDWithOutPrefix() throws ConnectionManagerException, UnknownHostException {
-        transformResponseToAuditMsg(createAdhocQueryRequest(), createAdhocQueryResponse(), LOCAL_HCID_WITH_PREFIX);
+        Integer outcome = 0;
+        transformResponseToAuditMsg(createAdhocQueryRequest(), createAdhocQueryResponse(), LOCAL_HCID_WITH_PREFIX,
+            outcome);
     }
 
     @Test
     public void testResponseAuditMsgHCIDWithPrefix() throws ConnectionManagerException, UnknownHostException {
-        transformResponseToAuditMsg(createAdhocQueryRequest(), createAdhocQueryResponse(), LOCAL_HCID_WITH_PREFIX);
+        Integer outcome = 0;
+        transformResponseToAuditMsg(createAdhocQueryRequest(), createAdhocQueryResponse(), LOCAL_HCID_WITH_PREFIX,
+            outcome);
     }
 
-    private void transformRequestToAuditMsg(AdhocQueryRequest request, NhinTargetSystemType target, String hcid) throws
-        ConnectionManagerException, UnknownHostException {
+    private void transformRequestToAuditMsg(AdhocQueryRequest request, NhinTargetSystemType target, String hcid,
+        Integer outcome) throws ConnectionManagerException, UnknownHostException {
 
         Properties webContextProperties = new Properties();
         webContextProperties.setProperty(NhincConstants.WEB_SERVICE_REQUEST_URL, WS_REEQUEST_URL);
@@ -136,7 +142,7 @@ public class DocQueryAuditTransformsTest extends AuditTransformsTest<AdhocQueryR
         AssertionType assertion = createAssertion();
         LogEventRequestType auditRequest = transforms.transformRequestToAuditMsg(request, assertion, target,
             NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.TRUE, null,
-            NhincConstants.DOC_QUERY_SERVICE_NAME);
+            NhincConstants.DOC_QUERY_SERVICE_NAME, outcome, null);
 
         testGetEventIdentificationType(auditRequest, NhincConstants.DOC_QUERY_SERVICE_NAME, Boolean.TRUE);
         testGetActiveParticipantSource(auditRequest, Boolean.TRUE, webContextProperties, LOCAL_IP);
@@ -148,7 +154,8 @@ public class DocQueryAuditTransformsTest extends AuditTransformsTest<AdhocQueryR
             NhincConstants.DOC_QUERY_SERVICE_NAME);
     }
 
-    private void transformResponseToAuditMsg(AdhocQueryRequest request, AdhocQueryResponse response, String hcid) throws
+    private void transformResponseToAuditMsg(AdhocQueryRequest request, AdhocQueryResponse response, String hcid,
+        Integer outcome) throws
         ConnectionManagerException, UnknownHostException {
         Properties webContextProperties = new Properties();
         webContextProperties.setProperty(NhincConstants.WEB_SERVICE_REQUEST_URL, WS_REEQUEST_URL);
@@ -179,7 +186,7 @@ public class DocQueryAuditTransformsTest extends AuditTransformsTest<AdhocQueryR
         AssertionType assertion = createAssertion();
         LogEventRequestType auditResponse = transforms.transformResponseToAuditMsg(request, response, assertion, null,
             NhincConstants.AUDIT_LOG_INBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.FALSE,
-            webContextProperties, NhincConstants.DOC_QUERY_SERVICE_NAME);
+            webContextProperties, NhincConstants.DOC_QUERY_SERVICE_NAME, outcome, null);
 
         testGetEventIdentificationType(auditResponse, NhincConstants.DOC_QUERY_SERVICE_NAME, Boolean.FALSE);
         testAuditSourceIdentification(auditResponse.getAuditMessage().getAuditSourceIdentification(), assertion);

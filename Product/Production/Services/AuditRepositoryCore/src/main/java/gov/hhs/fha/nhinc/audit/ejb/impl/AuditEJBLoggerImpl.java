@@ -64,15 +64,16 @@ public class AuditEJBLoggerImpl<T, K> implements AuditEJBLogger<T, K> {
      * @param webContextProperties Properties loaded from message context
      * @param serviceName Name of the Service being audited
      * @param transforms Instance of service specific Transforms
+     * @param outcome Reflects the transaction success/failure
      */
     @Asynchronous
     @Override
     public void auditRequestMessage(T request, AssertionType assertion, NhinTargetSystemType target,
         String direction, String _interface, Boolean isRequesting, Properties webContextProperties, String serviceName,
-        AuditTransforms transforms) {
+        AuditTransforms transforms, Integer outcome, Exception exception) {
         LOG.trace("--- Before asynchronous audit call of request message ---");
         LogEventRequestType auditLogMsg = transforms.transformRequestToAuditMsg(request, assertion, target,
-            direction, _interface, isRequesting, webContextProperties, serviceName);
+            direction, _interface, isRequesting, webContextProperties, serviceName, outcome, exception);
         auditLogMessages(auditLogMsg, assertion);
         LOG.trace("--- After asynchronous audit call of request message ---");
     }
@@ -90,15 +91,17 @@ public class AuditEJBLoggerImpl<T, K> implements AuditEJBLogger<T, K> {
      * @param webContextProperties Properties loaded from message context
      * @param serviceName Name of the Service being audited
      * @param transforms Instance of service specific Transforms
+     * @param outcome Reflects the transaction success/failure
+     * @param exception
      */
     @Asynchronous
     @Override
     public void auditResponseMessage(T request, K response, AssertionType assertion, NhinTargetSystemType target,
         String direction, String _interface, Boolean isRequesting, Properties webContextProperties, String serviceName,
-        AuditTransforms transforms) {
+        AuditTransforms transforms, Integer outcome, Exception exception) {
         LOG.trace("--- Before asynchronous audit call of response message ---");
         LogEventRequestType auditLogMsg = transforms.transformResponseToAuditMsg(request, response, assertion,
-            target, direction, _interface, isRequesting, webContextProperties, serviceName);
+            target, direction, _interface, isRequesting, webContextProperties, serviceName, outcome, exception);
         auditLogMessages(auditLogMsg, assertion);
         LOG.trace("--- After asynchronous audit call of response message ---");
     }

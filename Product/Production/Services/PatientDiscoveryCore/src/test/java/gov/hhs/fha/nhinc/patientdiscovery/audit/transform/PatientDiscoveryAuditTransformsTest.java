@@ -51,6 +51,7 @@ import static org.junit.Assert.assertSame;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.mockito.Matchers.any;
 
 /**
  *
@@ -117,7 +118,7 @@ public class PatientDiscoveryAuditTransformsTest extends AuditTransformsTest<PRP
             createPRPAIN201305UV02Request("Gallow", "Younger", "M", "01-12-2967", "1.1", "D123401", "2.2",
                 "abd3453dcd24wkkks545"), assertion, createNhinTarget(), NhincConstants.AUDIT_LOG_INBOUND_DIRECTION,
             NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.TRUE, webContextProperties,
-            NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME);
+            NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME, new Integer(0), null);
 
         testGetEventIdentificationType(auditRequest, NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME, Boolean.TRUE);
         testGetActiveParticipantSource(auditRequest, Boolean.TRUE, webContextProperties, localIp);
@@ -169,7 +170,7 @@ public class PatientDiscoveryAuditTransformsTest extends AuditTransformsTest<PRP
             createPRPAIN201306UV02Response("Gallow", "Younger", "M", "01-12-2967", "1.1", "D123401", "2.2",
                 "abd3453dcd24wkkks545"), assertion, createNhinTarget(), NhincConstants.AUDIT_LOG_INBOUND_DIRECTION,
             NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.FALSE, webContextProperties,
-            NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME);
+            NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME, new Integer(0), null);
 
         testGetEventIdentificationType(auditResponse, NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME, Boolean.TRUE);
         testGetActiveParticipantSource(auditResponse, Boolean.FALSE, webContextProperties, localIp);

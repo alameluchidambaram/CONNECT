@@ -73,8 +73,9 @@ public class PassthroughOutboundPatientDiscoveryDeferredResponse extends
     @Override
     MCCIIN000002UV01 process(PRPAIN201306UV02 request, AssertionType assertion, NhinTargetCommunitiesType target) {
         NhinTargetSystemType targetSystem = msgUtils.convertFirstToNhinTargetSystemType(target);
+        MCCIIN000002UV01 response = sendToNhin(delegate, request, assertion, targetSystem);
         auditRequest(request, assertion, target);
-        return sendToNhin(delegate, request, assertion, targetSystem);
+        return response;
     }
 
     /*

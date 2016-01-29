@@ -65,6 +65,8 @@ public class AuditRepositoryProxyJavaImpl implements AuditRepositoryProxy {
         securedRequest.setUserId(request.getUserId());
         securedRequest.setRelatesTo(request.getRelatesTo());
         securedRequest.setRequestMessageId(request.getRequestMessageId());
+        securedRequest.setStatus(request.getStatus());
+        securedRequest.setReason(request.getReason());
         return securedRequest;
     }
 }

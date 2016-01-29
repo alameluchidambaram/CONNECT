@@ -75,7 +75,7 @@ public class PassthroughOutboundDocSubmissionDeferredResponseTest {
         verify(mockEJBLogger).auditRequestMessage(eq(request), eq(assertion), isNotNull(NhinTargetSystemType.class),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.NHINC_XDR_RESPONSE_SERVICE_NAME),
-            any(DSDeferredResponseAuditTransforms.class));
+            any(DSDeferredResponseAuditTransforms.class), any(Integer.class), any(Exception.class));
 
         assertNotNull(response);
         assertEquals(NhincConstants.XDR_ACK_STATUS_MSG, response.getMessage().getStatus());
@@ -103,7 +103,7 @@ public class PassthroughOutboundDocSubmissionDeferredResponseTest {
         verify(mockEJBLogger, never()).auditRequestMessage(eq(request), eq(assertion), isNotNull(NhinTargetSystemType.class),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.NHINC_XDR_RESPONSE_SERVICE_NAME),
-            any(DSDeferredResponseAuditTransforms.class));
+            any(DSDeferredResponseAuditTransforms.class), any(Integer.class), any(Exception.class));
 
         assertNotNull(response);
         assertEquals(NhincConstants.XDR_ACK_STATUS_MSG, response.getMessage().getStatus());

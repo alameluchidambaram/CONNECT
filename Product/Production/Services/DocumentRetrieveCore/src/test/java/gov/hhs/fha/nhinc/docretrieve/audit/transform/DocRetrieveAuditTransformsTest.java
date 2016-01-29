@@ -133,7 +133,7 @@ public class DocRetrieveAuditTransformsTest
         AssertionType assertion = createAssertion();
         LogEventRequestType auditRequest = transforms.transformRequestToAuditMsg(request, assertion, createNhinTarget(),
             NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.TRUE,
-            null, NhincConstants.DOC_RETRIEVE_SERVICE_NAME);
+            null, NhincConstants.DOC_RETRIEVE_SERVICE_NAME, new Integer(0), null);
 
         testGetEventIdentificationType(auditRequest, NhincConstants.DOC_RETRIEVE_SERVICE_NAME, Boolean.TRUE);
         testGetActiveParticipantSource(auditRequest, Boolean.TRUE, webContextProperties, REMOTE_OBJECT_URL);
@@ -177,7 +177,7 @@ public class DocRetrieveAuditTransformsTest
         AssertionType assertion = createAssertion();
         LogEventRequestType auditResponse = transforms.transformResponseToAuditMsg(request, response, assertion, null,
             NhincConstants.AUDIT_LOG_INBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.FALSE,
-            webContextProperties, NhincConstants.DOC_RETRIEVE_SERVICE_NAME);
+            webContextProperties, NhincConstants.DOC_RETRIEVE_SERVICE_NAME, new Integer(0), null);
 
         testGetEventIdentificationType(auditResponse, NhincConstants.DOC_RETRIEVE_SERVICE_NAME, Boolean.FALSE);
         testGetActiveParticipantSource(auditResponse, Boolean.FALSE, webContextProperties, REMOTE_OBJECT_URL);

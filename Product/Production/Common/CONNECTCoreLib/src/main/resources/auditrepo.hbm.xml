@@ -42,5 +42,11 @@
         <property name="message">
             <column name="message"/>
         </property>
+        <property name="status">
+            <column name="status"/>
+        </property>
+        <property name="reason">
+            <column name="reason"/>
+        </property>
     </class>
 </hibernate-mapping>

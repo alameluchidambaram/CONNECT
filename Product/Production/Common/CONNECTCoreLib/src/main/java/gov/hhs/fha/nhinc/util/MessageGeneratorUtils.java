@@ -55,7 +55,7 @@ public class MessageGeneratorUtils {
     private static final String HL7_V3_CONTEXT = "org.hl7.v3";
     private static final String HL7_V3_URN = "urn:hl7-org:v3";
 
-    protected MessageGeneratorUtils() {
+    public MessageGeneratorUtils() {
     }
 
     /**
@@ -177,5 +177,13 @@ public class MessageGeneratorUtils {
             }
         }
         return assertion;
+    }
+
+    public Integer getEventOutcome(boolean status) {
+        if (status) {
+            return 12;
+        } else {
+            return 0;
+        }
     }
 }

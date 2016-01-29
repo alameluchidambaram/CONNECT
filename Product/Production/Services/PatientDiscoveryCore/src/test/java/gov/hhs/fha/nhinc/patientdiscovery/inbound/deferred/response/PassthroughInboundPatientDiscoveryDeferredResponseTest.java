@@ -87,7 +87,7 @@ public class PassthroughInboundPatientDiscoveryDeferredResponseTest {
             isNull(NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
             eq(NhincConstants.PATIENT_DISCOVERY_DEFERRED_RESP_SERVICE_NAME),
-            any(PatientDiscoveryDeferredResponseAuditTransforms.class));
+            any(PatientDiscoveryDeferredResponseAuditTransforms.class), any(Integer.class), isNull(Exception.class));
     }
 
     @Test
@@ -117,7 +117,7 @@ public class PassthroughInboundPatientDiscoveryDeferredResponseTest {
             isNull(NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
             eq(NhincConstants.PATIENT_DISCOVERY_DEFERRED_RESP_SERVICE_NAME),
-            any(PatientDiscoveryDeferredResponseAuditTransforms.class));
+            any(PatientDiscoveryDeferredResponseAuditTransforms.class), any(Integer.class), isNull(Exception.class));
     }
 
     private PatientDiscoveryDeferredResponseAuditLogger getAuditLogger(final boolean isLoggingOn) {

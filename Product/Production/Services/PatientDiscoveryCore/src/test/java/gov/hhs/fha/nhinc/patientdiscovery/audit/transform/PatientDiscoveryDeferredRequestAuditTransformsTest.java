@@ -47,6 +47,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import org.junit.Test;
+import static org.mockito.Matchers.any;
 
 /**
  *
@@ -93,7 +94,7 @@ public class PatientDiscoveryDeferredRequestAuditTransformsTest extends AuditTra
             createPRPAIN201305UV02Request("Gallow", "Younger", "M", "01-12-2967", "1.1", "D123401", "2.2",
                 "abd3453dcd24wkkks545"), assertion, createNhinTarget(), NhincConstants.AUDIT_LOG_INBOUND_DIRECTION,
             NhincConstants.AUDIT_LOG_ENTITY_INTERFACE, Boolean.TRUE, webContextProperties,
-            NhincConstants.PATIENT_DISCOVERY_DEFERRED_REQ_SERVICE_NAME);
+            NhincConstants.PATIENT_DISCOVERY_DEFERRED_REQ_SERVICE_NAME, new Integer(0), null);
 
         testGetEventIdentificationType(auditRequest, NhincConstants.PATIENT_DISCOVERY_DEFERRED_REQ_SERVICE_NAME,
             Boolean.TRUE);
@@ -154,7 +155,7 @@ public class PatientDiscoveryDeferredRequestAuditTransformsTest extends AuditTra
             TestPatientDiscoveryMessageHelper.createPRPAIN201305UV02Request("Gallow", "Younger", "M", "01-12-2967",
                 "1.1", "D123401", "2.2", "abd3453dcd24wkkks545"), new MCCIIN000002UV01(), assertion, createNhinTarget(),
             NhincConstants.AUDIT_LOG_INBOUND_DIRECTION, NhincConstants.AUDIT_LOG_ENTITY_INTERFACE, Boolean.FALSE,
-            webContextProperties, NhincConstants.PATIENT_DISCOVERY_DEFERRED_REQ_SERVICE_NAME);
+            webContextProperties, NhincConstants.PATIENT_DISCOVERY_DEFERRED_REQ_SERVICE_NAME, new Integer(0), null);
 
         testGetEventIdentificationType(auditResponse, NhincConstants.PATIENT_DISCOVERY_DEFERRED_REQ_SERVICE_NAME,
             Boolean.FALSE);

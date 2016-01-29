@@ -77,6 +77,6 @@ public abstract class AbstractInboundDocSubmissionDeferredRequest implements Inb
         AssertionType assertion, Properties webContextProperties) {
         auditLogger.auditResponseMessage(request, response, assertion, null, NhincConstants.AUDIT_LOG_INBOUND_DIRECTION,
             NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.FALSE, webContextProperties,
-            NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME);
+            NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME, 0, null);
     }
 }

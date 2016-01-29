@@ -36,6 +36,7 @@ import gov.hhs.fha.nhinc.patientdiscovery.MessageGeneratorUtils;
 import gov.hhs.fha.nhinc.patientdiscovery.audit.PatientDiscoveryAuditLogger;
 import gov.hhs.fha.nhinc.patientdiscovery.entity.OutboundPatientDiscoveryDelegate;
 import gov.hhs.fha.nhinc.patientdiscovery.entity.OutboundPatientDiscoveryOrchestratable;
+import gov.hhs.fha.nhinc.patientdiscovery.nhin.proxy.NwhinPDResponseWrapper;
 import gov.hhs.fha.nhinc.transform.subdisc.HL7PRPA201306Transforms;
 import java.util.concurrent.ExecutorService;
 import org.hl7.v3.CommunityPRPAIN201306UV02ResponseType;
@@ -77,8 +78,6 @@ public class PassthroughOutboundPatientDiscovery implements OutboundPatientDisco
         RespondingGatewayPRPAIN201306UV02ResponseType response = sendToNhin(request.getPRPAIN201305UV02(),
             MessageGeneratorUtils.getInstance().generateMessageId(assertion),
             msgUtils.convertFirstToNhinTargetSystemType(request.getNhinTargetCommunities()));
-        auidtRequest(request, assertion,
-            msgUtils.convertFirstToNhinTargetSystemType(request.getNhinTargetCommunities()));
 
         return response;
     }
@@ -98,6 +97,9 @@ public class PassthroughOutboundPatientDiscovery implements OutboundPatientDisco
                 NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME, target, request);
             OutboundPatientDiscoveryOrchestratable outMessage = delegate.process(inMessage);
             response = outMessage.getResponse();
+            auditRequest(outMessage.getRequest(), outMessage.getAssertion(), outMessage.getTarget(),
+                outMessage.getNwhinResponseWrapperList().get(0).getException(),
+                outMessage.getNwhinResponseWrapperList().get(0).isFailure());
         } catch (Exception ex) {
             String err = ExecutorServiceHelper.getFormattedExceptionInfo(ex, target,
                 NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME);
@@ -135,10 +137,12 @@ public class PassthroughOutboundPatientDiscovery implements OutboundPatientDisco
         return (new HL7PRPA201306Transforms()).createPRPA201306ForErrors(request, errStr);
     }
 
-    private void auidtRequest(RespondingGatewayPRPAIN201305UV02RequestType request, AssertionType assertion,
-        NhinTargetSystemType target) {
-        auditLogger.auditRequestMessage(request.getPRPAIN201305UV02(), assertion, target,
+    private void auditRequest(PRPAIN201305UV02 request, AssertionType assertion,
+        NhinTargetSystemType target, Exception exception, boolean status) {
+
+        auditLogger.auditRequestMessage(request, assertion, target,
             NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.TRUE, null,
-            NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME);
+            NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME, MessageGeneratorUtils.getInstance().getEventOutcome(status),
+            exception);
     }
 }

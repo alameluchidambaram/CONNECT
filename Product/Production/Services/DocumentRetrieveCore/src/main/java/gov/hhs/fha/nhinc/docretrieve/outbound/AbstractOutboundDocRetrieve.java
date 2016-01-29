@@ -99,7 +99,7 @@ public abstract class AbstractOutboundDocRetrieve {
 
         getAuditLogger().auditRequestMessage(request, assertion, targetSystem,
             NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE,
-            Boolean.TRUE, null, NhincConstants.DOC_RETRIEVE_SERVICE_NAME);
+            Boolean.TRUE, null, NhincConstants.DOC_RETRIEVE_SERVICE_NAME, 0, null);
 
     }
 

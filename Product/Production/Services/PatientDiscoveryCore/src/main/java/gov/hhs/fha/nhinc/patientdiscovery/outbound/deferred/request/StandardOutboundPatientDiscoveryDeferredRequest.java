@@ -134,10 +134,9 @@ public class StandardOutboundPatientDiscoveryDeferredRequest extends AbstractOut
                 RespondingGatewayPRPAIN201305UV02RequestType newRequest = createNewRespondingGatewayRequestForOneTarget(
                     message, assertion, targets, urlInfo.getHcid());
 
-                auditRequest(message, assertion, msgUtils.convertFirstToNhinTargetSystemType(targets));
-
                 if (isPolicyValid(newRequest)) {
                     ack = sendToNhin(newRequest.getPRPAIN201305UV02(), newRequest.getAssertion(), urlInfo);
+                    auditRequest(message, assertion, msgUtils.convertFirstToNhinTargetSystemType(targets));
                 } else {
                     ack = HL7AckTransforms.createAckErrorFrom201305(message, "Policy Check Failed");
                 }

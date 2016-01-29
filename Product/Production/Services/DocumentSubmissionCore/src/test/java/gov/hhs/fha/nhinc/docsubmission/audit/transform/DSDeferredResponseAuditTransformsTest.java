@@ -85,7 +85,7 @@ public class DSDeferredResponseAuditTransformsTest extends
         AssertionType assertion = createAssertion();
         LogEventRequestType auditRequest = transforms.transformRequestToAuditMsg(request, assertion,
             createNhinTarget(), NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE,
-            Boolean.TRUE, null, NhincConstants.NHINC_XDR_RESPONSE_SERVICE_NAME);
+            Boolean.TRUE, null, NhincConstants.NHINC_XDR_RESPONSE_SERVICE_NAME, new Integer(0), null);
         testGetEventIdentificationType(auditRequest, NhincConstants.NHINC_XDR_RESPONSE_SERVICE_NAME, Boolean.TRUE);
         testCreateActiveParticipantFromUser(auditRequest, Boolean.TRUE, assertion);
         testGetActiveParticipantDestination(auditRequest, Boolean.TRUE, null, REQUEST_WS_REQUEST_URL, REQUEST_LOCAL_IP);
@@ -151,7 +151,7 @@ public class DSDeferredResponseAuditTransformsTest extends
         AssertionType assertion = createAssertion();
         LogEventRequestType auditResponse = transforms.transformResponseToAuditMsg(request, response, assertion, null,
             NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE,
-            Boolean.FALSE, webContextProperties, NhincConstants.NHINC_XDR_RESPONSE_SERVICE_NAME);
+            Boolean.FALSE, webContextProperties, NhincConstants.NHINC_XDR_RESPONSE_SERVICE_NAME, new Integer(0), null);
 
         testGetEventIdentificationType(auditResponse, NhincConstants.NHINC_XDR_SERVICE_NAME, Boolean.FALSE);
 

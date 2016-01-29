@@ -83,7 +83,8 @@ public class PassthroughInboundPatientDiscoveryTest {
         verify(mockEJBLogger).auditResponseMessage(any(PRPAIN201305UV02.class), any(PRPAIN201306UV02.class),
             any(AssertionType.class), isNull(NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME), any(PatientDiscoveryAuditTransforms.class));
+            eq(NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME), any(PatientDiscoveryAuditTransforms.class),
+            any(Integer.class), isNull(Exception.class));
     }
 
     @Test
@@ -109,7 +110,8 @@ public class PassthroughInboundPatientDiscoveryTest {
         verify(mockEJBLogger, never()).auditResponseMessage(any(PRPAIN201305UV02.class), any(PRPAIN201306UV02.class),
             any(AssertionType.class), isNull(NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME), any(PatientDiscoveryAuditTransforms.class));
+            eq(NhincConstants.PATIENT_DISCOVERY_SERVICE_NAME), any(PatientDiscoveryAuditTransforms.class),
+            any(Integer.class), isNull(Exception.class));
     }
 
     private PatientDiscoveryAuditLogger getAuditLogger(final boolean isLoggingOn) {

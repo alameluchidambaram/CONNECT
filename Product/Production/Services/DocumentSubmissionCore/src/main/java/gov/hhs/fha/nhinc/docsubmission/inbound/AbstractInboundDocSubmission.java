@@ -71,6 +71,6 @@ public abstract class AbstractInboundDocSubmission implements InboundDocSubmissi
         AssertionType assertion, Properties webContextProperties) {
         auditLogger.auditResponseMessage(request, response, assertion, null,
             NhincConstants.AUDIT_LOG_INBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE,
-            Boolean.FALSE, webContextProperties, NhincConstants.NHINC_XDR_SERVICE_NAME);
+            Boolean.FALSE, webContextProperties, NhincConstants.NHINC_XDR_SERVICE_NAME, 0, null);
     }
 }

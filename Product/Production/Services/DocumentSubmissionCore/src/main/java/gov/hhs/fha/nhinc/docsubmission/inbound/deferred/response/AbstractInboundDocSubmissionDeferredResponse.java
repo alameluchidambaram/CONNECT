@@ -68,7 +68,7 @@ public abstract class AbstractInboundDocSubmissionDeferredResponse implements In
         Properties webContextProperties) {
         auditLogger.auditResponseMessage(body, response, assertion, null, NhincConstants.AUDIT_LOG_INBOUND_DIRECTION,
             NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.FALSE, webContextProperties,
-            NhincConstants.NHINC_XDR_RESPONSE_SERVICE_NAME);
+            NhincConstants.NHINC_XDR_RESPONSE_SERVICE_NAME, 0, null);
     }
 
     protected DSDeferredResponseAuditLogger getAuditLogger() {

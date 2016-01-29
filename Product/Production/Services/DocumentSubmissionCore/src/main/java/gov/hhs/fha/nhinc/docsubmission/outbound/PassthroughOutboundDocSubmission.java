@@ -77,7 +77,7 @@ public class PassthroughOutboundDocSubmission implements OutboundDocSubmission {
         AssertionType assertion, NhinTargetSystemType target) {
         auditLogger.auditRequestMessage(request.getProvideAndRegisterDocumentSetRequest(), assertion, target,
             NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.TRUE, null,
-            NhincConstants.NHINC_XDR_SERVICE_NAME);
+            NhincConstants.NHINC_XDR_SERVICE_NAME, 0, null);
     }
 
     private OutboundDocSubmissionOrchestratable createOrchestratable(OutboundDocSubmissionDelegate delegate,

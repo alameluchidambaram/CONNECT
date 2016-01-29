@@ -104,11 +104,11 @@ public class StandardInboundDocSubmissionDeferredRequestTest {
 
         StandardInboundDocSubmissionDeferredRequest standardDocSubmission = new StandardInboundDocSubmissionDeferredRequest(
             adapterFactory, policyChecker, propertyAccessor, getAuditLogger(true), errorAdapterFactory) {
-            @Override
-            public DocSubmissionUtils getDocSubmissionUtils() {
-                return mockDocSubmissionUtils;
-            }
-        };
+                @Override
+                public DocSubmissionUtils getDocSubmissionUtils() {
+                    return mockDocSubmissionUtils;
+                }
+            };
 
         XDRAcknowledgementType actualResponse = standardDocSubmission.provideAndRegisterDocumentSetBRequest(request,
             assertion, webContextProperties);
@@ -117,7 +117,8 @@ public class StandardInboundDocSubmissionDeferredRequestTest {
         verify(mockEJBLogger).auditResponseMessage(eq(request), eq(actualResponse), eq(assertion), isNull(
             NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME), any(DocSubmissionDeferredRequestAuditTransforms.class));
+            eq(NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME), any(DocSubmissionDeferredRequestAuditTransforms.class),
+            any(Integer.class), any(Exception.class));
     }
 
     @Test
@@ -153,7 +154,8 @@ public class StandardInboundDocSubmissionDeferredRequestTest {
         verify(mockEJBLogger).auditResponseMessage(eq(request), eq(actualResponse), eq(assertion), isNull(
             NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME), any(DocSubmissionDeferredRequestAuditTransforms.class));
+            eq(NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME), any(DocSubmissionDeferredRequestAuditTransforms.class),
+            any(Integer.class), any(Exception.class));
     }
 
     @Test
@@ -180,7 +182,8 @@ public class StandardInboundDocSubmissionDeferredRequestTest {
         verify(mockEJBLogger).auditResponseMessage(eq(request), eq(actualResponse), eq(assertion), isNull(
             NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME), any(DocSubmissionDeferredRequestAuditTransforms.class));
+            eq(NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME), any(DocSubmissionDeferredRequestAuditTransforms.class),
+            any(Integer.class), any(Exception.class));
     }
 
     @Test
@@ -221,11 +224,11 @@ public class StandardInboundDocSubmissionDeferredRequestTest {
 
         StandardInboundDocSubmissionDeferredRequest standardDocSubmission = new StandardInboundDocSubmissionDeferredRequest(
             adapterFactory, policyChecker, propertyAccessor, getAuditLogger(false), errorAdapterFactory) {
-            @Override
-            public DocSubmissionUtils getDocSubmissionUtils() {
-                return mockDocSubmissionUtils;
-            }
-        };
+                @Override
+                public DocSubmissionUtils getDocSubmissionUtils() {
+                    return mockDocSubmissionUtils;
+                }
+            };
 
         XDRAcknowledgementType actualResponse = standardDocSubmission.provideAndRegisterDocumentSetBRequest(request,
             assertion, webContextProperties);
@@ -234,7 +237,8 @@ public class StandardInboundDocSubmissionDeferredRequestTest {
         verify(mockEJBLogger, never()).auditResponseMessage(eq(request), eq(actualResponse), eq(assertion), isNull(
             NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
-            eq(NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME), any(DocSubmissionDeferredRequestAuditTransforms.class));
+            eq(NhincConstants.NHINC_XDR_REQUEST_SERVICE_NAME), any(DocSubmissionDeferredRequestAuditTransforms.class),
+            any(Integer.class), any(Exception.class));
     }
 
     private DocSubmissionDeferredRequestAuditLogger getAuditLogger(final boolean isAuditOn) {

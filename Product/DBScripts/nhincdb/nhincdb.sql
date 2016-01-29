@@ -28,6 +28,8 @@ CREATE TABLE IF NOT EXISTS auditrepo.auditrepository (
     relatesTo varchar(100) DEFAULT NULL COMMENT 'column relatesTo provides ID Relates to deferred Request',
     direction char(20) NOT NULL COMMENT 'column direction identifies Inbound or Outbound transaction',
     remoteHcid varchar(255) DEFAULT NULL COMMENT 'column remoteHcid always persists Remote Organization Id',
+    status varchar(255) DEFAULT NULL COMMENT  'column status of transaction Success/Failure',
+    reason varchar(255) DEFAULT NULL COMMENT  'column reason of failure',
     message longblob NOT NULL COMMENT 'column provides Audit Blob for ATNA complaint audit message'
 );
 

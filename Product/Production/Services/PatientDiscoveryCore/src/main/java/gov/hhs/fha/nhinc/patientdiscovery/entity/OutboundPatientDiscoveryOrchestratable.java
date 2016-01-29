@@ -35,6 +35,8 @@ import gov.hhs.fha.nhinc.orchestration.OutboundDelegate;
 import gov.hhs.fha.nhinc.orchestration.OutboundOrchestratableMessage;
 import gov.hhs.fha.nhinc.orchestration.OutboundResponseProcessor;
 import gov.hhs.fha.nhinc.orchestration.PolicyTransformer;
+import gov.hhs.fha.nhinc.patientdiscovery.nhin.proxy.NwhinPDResponseWrapper;
+import java.util.ArrayList;
 import org.hl7.v3.PRPAIN201305UV02;
 import org.hl7.v3.PRPAIN201306UV02;
 import org.hl7.v3.RespondingGatewayPRPAIN201306UV02ResponseType;
@@ -55,6 +57,24 @@ public class OutboundPatientDiscoveryOrchestratable implements OutboundOrchestra
     private PRPAIN201305UV02 request = null;
     private PRPAIN201306UV02 response = null;
     private RespondingGatewayPRPAIN201306UV02ResponseType cumulativeResponse = null;
+    private NwhinPDResponseWrapper wrapper;
+    private ArrayList<NwhinPDResponseWrapper> nwhinResponseWrapperList;
+
+    public NwhinPDResponseWrapper getWrapper() {
+        return wrapper;
+    }
+
+    public ArrayList<NwhinPDResponseWrapper> getNwhinResponseWrapperList() {
+        return nwhinResponseWrapperList;
+    }
+
+    public void setNwhinResponseWrapperList(ArrayList<NwhinPDResponseWrapper> nwhinResponseWrapperList) {
+        this.nwhinResponseWrapperList = nwhinResponseWrapperList;
+    }
+
+    public void setWrapper(NwhinPDResponseWrapper wrapper) {
+        this.wrapper = wrapper;
+    }
 
     public OutboundPatientDiscoveryOrchestratable() {
     }

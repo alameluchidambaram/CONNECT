@@ -80,7 +80,7 @@ public abstract class AbstractOutboundPatientDiscoveryDeferredResponse implement
         getAuditLogger().auditRequestMessage(message, assertion,
             MessageGeneratorUtils.getInstance().convertFirstToNhinTargetSystemType(targets),
             NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.TRUE,
-            null, NhincConstants.PATIENT_DISCOVERY_DEFERRED_RESP_SERVICE_NAME);
+            null, NhincConstants.PATIENT_DISCOVERY_DEFERRED_RESP_SERVICE_NAME, 0, null);
     }
 
     protected NhinTargetSystemType convertToNhinTargetSystemType(NhinTargetCommunitiesType targets) {
