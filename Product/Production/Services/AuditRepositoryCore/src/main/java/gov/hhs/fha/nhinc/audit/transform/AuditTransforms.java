@@ -581,9 +581,7 @@ public abstract class AuditTransforms<T, K> {
         result.setEventTimestamp(eventDate);
         result.setRelatesTo(getRelatesTo(assertion));
         result.setRequestMessageId(assertion.getMessageId());
-        if (exception != null) {
-            result.setReason(exception.getLocalizedMessage());
-        }
+        result.setReason(exception.getLocalizedMessage());
         result.setStatus(getStatus(outcome));
         return result;
     }

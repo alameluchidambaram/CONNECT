@@ -99,7 +99,7 @@ public abstract class AbstractInboundX12RealTime implements InboundX12RealTime {
 
         getAuditLogger().auditResponseMessage(request, response, assertion, null,
             NhincConstants.AUDIT_LOG_INBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.FALSE,
-            webContextProperties, NhincConstants.CORE_X12DS_REALTIME_SERVICE_NAME);
+            webContextProperties, NhincConstants.CORE_X12DS_REALTIME_SERVICE_NAME, 0, null);
     }
 
     protected X12RealTimeAuditLogger getAuditLogger() {

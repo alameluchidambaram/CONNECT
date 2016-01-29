@@ -81,7 +81,7 @@ public class PassthroughOutboundX12RealTimeTest {
         verify(mockEJBLogger).auditRequestMessage(eq(request), eq(assertion), any(NhinTargetSystemType.class),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.CORE_X12DS_REALTIME_SERVICE_NAME),
-            any(X12RealTimeAuditTransforms.class));
+            any(X12RealTimeAuditTransforms.class), any(Integer.class), any(Exception.class));
     }
 
     @Test
@@ -98,7 +98,7 @@ public class PassthroughOutboundX12RealTimeTest {
         verify(mockEJBLogger, never()).auditRequestMessage(eq(request), eq(assertion), any(NhinTargetSystemType.class),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.CORE_X12DS_REALTIME_SERVICE_NAME),
-            any(X12RealTimeAuditTransforms.class));
+            any(X12RealTimeAuditTransforms.class), any(Integer.class), any(Exception.class));
     }
 
     private X12RealTimeAuditLogger getAuditLogger(final boolean isLoggingOn) {

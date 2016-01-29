@@ -78,7 +78,7 @@ public class PassthroughInboundX12BatchResponseTest {
             isNull(NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
             eq(NhincConstants.CORE_X12DS_GENERICBATCH_RESPONSE_SERVICE_NAME),
-            any(X12BatchAuditTransforms.class));
+            any(X12BatchAuditTransforms.class), any(Integer.class), any(Exception.class));
     }
 
     @Test
@@ -97,7 +97,7 @@ public class PassthroughInboundX12BatchResponseTest {
             isNull(NhinTargetSystemType.class), eq(NhincConstants.AUDIT_LOG_INBOUND_DIRECTION),
             eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE), eq(Boolean.FALSE), eq(webContextProperties),
             eq(NhincConstants.CORE_X12DS_GENERICBATCH_RESPONSE_SERVICE_NAME),
-            any(X12BatchAuditTransforms.class));
+            any(X12BatchAuditTransforms.class), any(Integer.class), any(Exception.class));
     }
 
     private X12BatchAuditLogger getAuditLogger(final boolean isLoggingOn) {

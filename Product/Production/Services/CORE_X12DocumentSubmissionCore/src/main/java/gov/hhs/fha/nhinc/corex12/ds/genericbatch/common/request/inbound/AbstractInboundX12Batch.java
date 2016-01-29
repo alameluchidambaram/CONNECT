@@ -109,7 +109,7 @@ public abstract class AbstractInboundX12Batch implements InboundX12Batch {
         COREEnvelopeBatchSubmissionResponse response, AssertionType assertion, Properties webContextProperties) {
 
         auditLogger.auditResponseMessage(request, response, assertion, null, getDirection(), getInterfaceName(),
-            Boolean.FALSE, webContextProperties, getServiceName());
+            Boolean.FALSE, webContextProperties, getServiceName(), 0, null);
     }
 
     protected final String getDirection() {

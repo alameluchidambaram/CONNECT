@@ -100,7 +100,7 @@ public class PassthroughOutboundX12RealTime implements OutboundX12RealTime {
         NhinTargetSystemType targetSystem) {
 
         getAuditLogger().auditRequestMessage(body, assertion, targetSystem, getDirection(), getInterfaceName(),
-            Boolean.TRUE, null, getServiceName());
+            Boolean.TRUE, null, getServiceName(), 0, null);
     }
 
     protected X12RealTimeAuditLogger getAuditLogger() {

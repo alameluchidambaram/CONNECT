@@ -74,7 +74,7 @@ public class PassthroughOutboundX12BatchRequestTest {
         verify(mockEJBLogger).auditRequestMessage(eq(msg), eq(assertion), any(NhinTargetSystemType.class),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.CORE_X12DS_GENERICBATCH_REQUEST_SERVICE_NAME),
-            any(X12BatchAuditTransforms.class));
+            any(X12BatchAuditTransforms.class), any(Integer.class), any(Exception.class));
     }
 
     @Test
@@ -86,7 +86,7 @@ public class PassthroughOutboundX12BatchRequestTest {
         verify(mockEJBLogger, never()).auditRequestMessage(eq(msg), eq(assertion), any(NhinTargetSystemType.class),
             eq(NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION), eq(NhincConstants.AUDIT_LOG_NHIN_INTERFACE),
             eq(Boolean.TRUE), isNull(Properties.class), eq(NhincConstants.CORE_X12DS_GENERICBATCH_REQUEST_SERVICE_NAME),
-            any(X12BatchAuditTransforms.class));
+            any(X12BatchAuditTransforms.class), any(Integer.class), any(Exception.class));
     }
 
     private X12BatchAuditLogger getAuditLogger(final boolean isLoggingOn) {

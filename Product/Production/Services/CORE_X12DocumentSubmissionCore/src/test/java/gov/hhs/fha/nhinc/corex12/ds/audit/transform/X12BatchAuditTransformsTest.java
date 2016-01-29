@@ -90,7 +90,7 @@ public class X12BatchAuditTransformsTest extends
         LogEventRequestType auditRequest = transforms.transformRequestToAuditMsg(
             createCOREEnvelopeBatchSubmissionRequest(), assertion, createNhinTarget(),
             NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.TRUE,
-            webContextProperties, NhincConstants.CORE_X12DS_GENERICBATCH_REQUEST_SERVICE_NAME);
+            webContextProperties, NhincConstants.CORE_X12DS_GENERICBATCH_REQUEST_SERVICE_NAME, 0, null);
 
         testGetEventIdentificationType(auditRequest, NhincConstants.CORE_X12DS_REALTIME_SERVICE_NAME, Boolean.TRUE);
         testGetActiveParticipantSource(auditRequest, Boolean.TRUE, webContextProperties, localIp);
@@ -137,7 +137,7 @@ public class X12BatchAuditTransformsTest extends
         LogEventRequestType auditRequest = transforms.transformResponseToAuditMsg(
             createCOREEnvelopeBatchSubmissionRequest(), createCOREEnvelopeBatchSubmissionResponse(), assertion,
             createNhinTarget(), NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE,
-            Boolean.TRUE, webContextProperties, NhincConstants.CORE_X12DS_REALTIME_SERVICE_NAME);
+            Boolean.TRUE, webContextProperties, NhincConstants.CORE_X12DS_REALTIME_SERVICE_NAME, 0, null);
 
         testGetEventIdentificationType(auditRequest, NhincConstants.CORE_X12DS_REALTIME_SERVICE_NAME, Boolean.TRUE);
         testGetActiveParticipantSource(auditRequest, Boolean.TRUE, webContextProperties, localIp);

@@ -90,7 +90,7 @@ public class X12RealTimeAuditTransformsTest extends AuditTransformsTest<COREEnve
         LogEventRequestType auditRequest = transforms.transformRequestToAuditMsg(createCOREEnvelopeRealTimeRequest(),
             assertion, createNhinTarget(), NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION,
             NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.TRUE, webContextProperties,
-            NhincConstants.CORE_X12DS_REALTIME_SERVICE_NAME);
+            NhincConstants.CORE_X12DS_REALTIME_SERVICE_NAME, 0, null);
 
         testGetEventIdentificationType(auditRequest, NhincConstants.CORE_X12DS_REALTIME_SERVICE_NAME, Boolean.TRUE);
         testGetActiveParticipantSource(auditRequest, Boolean.TRUE, webContextProperties, localIp);
@@ -136,7 +136,7 @@ public class X12RealTimeAuditTransformsTest extends AuditTransformsTest<COREEnve
         LogEventRequestType auditRequest = transforms.transformResponseToAuditMsg(createCOREEnvelopeRealTimeRequest(),
             createCOREEnvelopeRealTimeResponse(), assertion, createNhinTarget(),
             NhincConstants.AUDIT_LOG_OUTBOUND_DIRECTION, NhincConstants.AUDIT_LOG_NHIN_INTERFACE, Boolean.TRUE,
-            webContextProperties, NhincConstants.CORE_X12DS_REALTIME_SERVICE_NAME);
+            webContextProperties, NhincConstants.CORE_X12DS_REALTIME_SERVICE_NAME, 0, null);
 
         testGetEventIdentificationType(auditRequest, NhincConstants.CORE_X12DS_REALTIME_SERVICE_NAME, Boolean.TRUE);
         testGetActiveParticipantSource(auditRequest, Boolean.TRUE, webContextProperties, localIp);

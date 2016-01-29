@@ -95,7 +95,7 @@ public abstract class PassthroughOutboundX12Batch implements OutboundX12Batch {
         NhinTargetSystemType targetSystem) {
 
         getAuditLogger().auditRequestMessage(body, assertion, targetSystem, getMessageDirection(), getInterfaceName(),
-            Boolean.TRUE, null, getServiceName());
+            Boolean.TRUE, null, getServiceName(), 0, null);
     }
 
     protected X12BatchAuditLogger getAuditLogger() {
